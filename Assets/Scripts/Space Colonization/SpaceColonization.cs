@@ -21,6 +21,8 @@ public class SpaceColonization : MonoBehaviour {
     [Header("Mesh Generation")]
     public float invertedGrowth = 1.5f;
     public Material meshMaterial;
+    [Range(3,10)]
+    public int radialSubdivisions = 10;
 
     private Helper helper;
 
@@ -55,6 +57,7 @@ public class SpaceColonization : MonoBehaviour {
         tree.maxDist = maxDist;
         tree.numLeaves = numLeaves;
         tree.invertedGrowth = invertedGrowth;
+        tree.radialSubdivisions = radialSubdivisions;
 
         tree.setup();
 

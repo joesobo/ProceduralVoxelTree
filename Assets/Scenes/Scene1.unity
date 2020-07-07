@@ -420,6 +420,7 @@ MonoBehaviour:
   growIterations: 300
   invertedGrowth: 3.25
   meshMaterial: {fileID: 2100000, guid: 22ffb15f5a32058448ae7ab2f64b18df, type: 2}
+  radialSubdivisions: 10
 --- !u!4 &504084192
 Transform:
   m_ObjectHideFlags: 0

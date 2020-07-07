@@ -17,7 +17,7 @@ public class Tree : MonoBehaviour {
     public float maxDist = 1f;
     public float minDist = .1f;
     public int numLeaves = 100;
-    private int radialSubdivisions = 10;
+    public int radialSubdivisions = 10;
     private Vector3 rootPos = new Vector3(0, -200, 0);
 
     public void setup() {
