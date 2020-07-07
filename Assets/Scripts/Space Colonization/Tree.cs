@@ -8,7 +8,6 @@ public class Tree : MonoBehaviour {
     public Transform parent;
     private List<Leaf> leaves = new List<Leaf>();
     private List<Branch> branches = new List<Branch>();
-    public Transform treeParent;
     public float invertedGrowth;
 
     public float width;

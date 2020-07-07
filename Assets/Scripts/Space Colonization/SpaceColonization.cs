@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpaceColonization : MonoBehaviour {
     private Tree tree;
-    public Transform treeParent;
     private GameObject treeObject;
 
     public GameObject leafPrefab;
@@ -33,7 +32,6 @@ public class SpaceColonization : MonoBehaviour {
     public void Generate() {
         //clean up old stuff
         helper.ClearAllChildren(this.transform);
-        helper.ClearAllChildren(treeParent);
         Destroy(treeObject);
 
         //new tree object
@@ -50,7 +48,6 @@ public class SpaceColonization : MonoBehaviour {
         tree = treeObject.AddComponent<Tree>();
         tree.leafPrefab = leafPrefab;
         tree.parent = this.transform;
-        tree.treeParent = treeParent.transform;
         tree.width = width;
         tree.length = length;
         tree.minDist = minDist;
