@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour {
     private MeshFilter filter;
-    public GameObject leafPrefab;
+    //public GameObject leafPrefab;
+    public Material leafMat;
     public Transform parent;
-    private List<Leaf> leaves = new List<Leaf>();
+    private List<GameObject> leaves = new List<GameObject>();
+    private List<Leaf> leavesRef = new List<Leaf>();
     private List<Branch> branches = new List<Branch>();
     public float invertedGrowth;
 
@@ -23,7 +25,7 @@ public class Tree : MonoBehaviour {
         filter = GetComponent<MeshFilter>();
         
         for (int i = 0; i < numLeaves; i++) {
-            leaves.Add(new Leaf());
+            leavesRef.Add(new Leaf());
         }
 
         Branch root = new Branch(rootPos, Vector3.up, null, length, width);
@@ -34,8 +36,8 @@ public class Tree : MonoBehaviour {
 
         bool found = false;
         while (!found) {
-            for (int i = 0; i < leaves.Count; i++) {
-                float dist = Vector3.Distance(current.position, leaves[i].position);
+            for (int i = 0; i < leavesRef.Count; i++) {
+                float dist = Vector3.Distance(current.position, leavesRef[i].position);
 
                 if (dist < maxDist) {
                     found = true;
@@ -51,8 +53,8 @@ public class Tree : MonoBehaviour {
     }
 
     public void grow() {
-        for (int i = 0; i < leaves.Count; i++) {
-            Leaf leaf = leaves[i];
+        for (int i = 0; i < leavesRef.Count; i++) {
+            Leaf leaf = leavesRef[i];
 
             Branch closestBranch = null;
             float record = 100000000;
@@ -80,11 +82,21 @@ public class Tree : MonoBehaviour {
             }
         }
 
-        //trim reached leaves (delete reference)
-        for (int i = leaves.Count - 1; i >= 0; i--) {
-            if (leaves[i].reached) {
-                leaves[i].RemoveLeaf();
-                leaves.RemoveAt(i);
+        //create leaves and remove reference upon reaching
+        for (int i = leavesRef.Count - 1; i >= 0; i--) {
+            if (leavesRef[i].reached) {
+                //Create new leaf
+                GameObject newLeaf = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                newLeaf.name = "Leaf";
+                newLeaf.GetComponent<MeshRenderer>().material = leafMat;
+                newLeaf.transform.position = leavesRef[i].position;
+                newLeaf.transform.localScale = Vector3.one * Random.Range(10,20);
+                newLeaf.transform.parent = this.transform;
+                leaves.Add(newLeaf);
+
+                //Remove reference
+                leavesRef[i].RemoveLeafRef();
+                leavesRef.RemoveAt(i);
             }
         }
 
@@ -105,8 +117,8 @@ public class Tree : MonoBehaviour {
     public void show() {
         Mesh treeMesh = new Mesh();
 
-        for (int i = 0; i < leaves.Count; i++) {
-            leaves[i].show(leafPrefab, parent);
+        for (int i = 0; i < leavesRef.Count; i++) {
+            leavesRef[i].show(parent);
         }
 
         for (int i = branches.Count - 1; i >= 0; i--) {

@@ -313,7 +313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &92198329
 RectTransform:
   m_ObjectHideFlags: 0
@@ -411,7 +411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &504084191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,17 +424,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7367712ed20bf4081e6be1fd803037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leafPrefab: {fileID: 4478449584817379510, guid: f07f46d3552fcdc45a40957996319105,
-    type: 3}
-  width: 1.5
-  length: 1.5
+  leafMat: {fileID: 2100000, guid: 067fea11dc3d34a418179d3601f24bb3, type: 2}
+  width: 2
+  length: 2
   maxDist: 100
   minDist: 10
   numLeaves: 800
-  growIterations: 300
-  invertedGrowth: 3.25
+  growIterations: 250
+  invertedGrowth: 3.5
   meshMaterial: {fileID: 2100000, guid: 22ffb15f5a32058448ae7ab2f64b18df, type: 2}
-  radialSubdivisions: 10
+  radialSubdivisions: 5
 --- !u!4 &504084192
 Transform:
   m_ObjectHideFlags: 0
@@ -619,7 +618,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &849591712
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1021,7 +1020,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1229,7 +1228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 3
-  center: {x: 0, y: -200, z: -200}
+  center: {x: 0, y: -200, z: 0}
 --- !u!1 &1840993190
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,11 +13,15 @@ public class Leaf : MonoBehaviour {
         //this.position = new Vector2(Random.Range(-200, 200), Random.Range(-200, 200));
     }
 
-    public void show(GameObject prefab, Transform parent) {
-        objectRef = Instantiate(prefab, position, Quaternion.identity, parent);
+    public void show(Transform parent) {
+        objectRef = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        objectRef.name = "Leaf Reference";
+        //TODO: set material
+        objectRef.transform.position = position;
+        objectRef.transform.parent = parent;
     }
 
-    public void RemoveLeaf() {
+    public void RemoveLeafRef() {
         Destroy(objectRef);
     }
 }

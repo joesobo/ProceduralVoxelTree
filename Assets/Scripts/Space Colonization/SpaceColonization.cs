@@ -6,7 +6,8 @@ public class SpaceColonization : MonoBehaviour {
     private Tree tree;
     private GameObject treeObject;
 
-    public GameObject leafPrefab;
+    //public GameObject leafPrefab;
+    public Material leafMat;
 
     public float width = 0.1f;
     public float length = 0.1f;
@@ -46,7 +47,8 @@ public class SpaceColonization : MonoBehaviour {
 
         //set up tree
         tree = treeObject.AddComponent<Tree>();
-        tree.leafPrefab = leafPrefab;
+       // tree.leafPrefab = leafPrefab;
+        tree.leafMat = leafMat;
         tree.parent = this.transform;
         tree.width = width;
         tree.length = length;
