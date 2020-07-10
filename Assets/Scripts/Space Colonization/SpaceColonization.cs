@@ -9,8 +9,10 @@ public class SpaceColonization : MonoBehaviour {
     //public GameObject leafPrefab;
     public Material leafMat;
 
-    public float width = 0.1f;
-    public float length = 0.1f;
+    public float minWidth = 0.1f;
+    public float maxWidth = 0.2f;
+    public float minLength = 0.1f;
+    public float maxLength = 0.2f;
 
     [Header("Tree Attributes")]
     public float maxDist = 1f;
@@ -50,8 +52,10 @@ public class SpaceColonization : MonoBehaviour {
        // tree.leafPrefab = leafPrefab;
         tree.leafMat = leafMat;
         tree.parent = this.transform;
-        tree.width = width;
-        tree.length = length;
+        tree.minWidth = minWidth;
+        tree.maxWidth = maxWidth;
+        tree.minLength = minLength;
+        tree.maxLength = maxLength;
         tree.minDist = minDist;
         tree.maxDist = maxDist;
         tree.numLeaves = numLeaves;

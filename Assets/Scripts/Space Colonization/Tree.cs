@@ -12,8 +12,10 @@ public class Tree : MonoBehaviour {
     private List<Branch> branches = new List<Branch>();
     public float invertedGrowth;
 
-    public float width;
-    public float length;
+    public float minWidth;
+    public float maxWidth;
+    public float minLength;
+    public float maxLength;
 
     public float maxDist = 1f;
     public float minDist = .1f;
@@ -23,12 +25,12 @@ public class Tree : MonoBehaviour {
 
     public void setup() {
         filter = GetComponent<MeshFilter>();
-        
+
         for (int i = 0; i < numLeaves; i++) {
             leavesRef.Add(new Leaf());
         }
 
-        Branch root = new Branch(rootPos, Vector3.up, null, length, width);
+        Branch root = new Branch(rootPos, Vector3.up, null, minWidth, maxWidth, minLength, maxLength);
 
         branches.Add(root);
 
@@ -90,7 +92,7 @@ public class Tree : MonoBehaviour {
                 newLeaf.name = "Leaf";
                 newLeaf.GetComponent<MeshRenderer>().material = leafMat;
                 newLeaf.transform.position = leavesRef[i].position;
-                newLeaf.transform.localScale = Vector3.one * Random.Range(10,20);
+                newLeaf.transform.localScale = Vector3.one * Random.Range(10, 20);
                 newLeaf.transform.parent = this.transform;
                 leaves.Add(newLeaf);
 
@@ -126,7 +128,7 @@ public class Tree : MonoBehaviour {
             Branch b = branches[i];
 
             if (b.children.Count == 0) {
-                newSize = b.width;
+                newSize = Random.Range(b.minWidth, b.maxWidth);
             } else {
                 foreach (Branch bc in b.children) {
                     newSize += Mathf.Pow(bc.size, invertedGrowth);
@@ -152,7 +154,7 @@ public class Tree : MonoBehaviour {
 
                 Vector3 pos = new Vector3(Mathf.Cos(alpha) * b.size, 0, Mathf.Sin(alpha) * b.size);
                 pos = quat * pos;
-                pos += b.position + (b.direction * b.length);
+                pos += b.position + (b.direction * Random.Range(b.minLength, b.maxLength));
                 vertices[vertIndex + s] = pos - rootPos;
 
                 if (b.parentBranch == null) {
@@ -168,24 +170,24 @@ public class Tree : MonoBehaviour {
             int tId = b.verticesId;
 
             for (int s = 0; s < radialSubdivisions; s++) {
-                triangles[fid+s*6] = bId + s;
-                triangles[fid+s*6+1] = tId + s;
+                triangles[fid + s * 6] = bId + s;
+                triangles[fid + s * 6 + 1] = tId + s;
 
-                if (s == radialSubdivisions-1) {
-                    triangles[fid+s*6+2] = tId;
+                if (s == radialSubdivisions - 1) {
+                    triangles[fid + s * 6 + 2] = tId;
                 } else {
-                    triangles[fid+s*6+2] = tId + s + 1;
+                    triangles[fid + s * 6 + 2] = tId + s + 1;
                 }
 
-                if (s == radialSubdivisions-1) {
-					triangles[fid+s*6+3] = bId + s;
-					triangles[fid+s*6+4] = tId;
-					triangles[fid+s*6+5] = bId;
-				} else {
-					triangles[fid+s*6+3] = bId + s;
-					triangles[fid+s*6+4] = tId + s + 1;
-					triangles[fid+s*6+5] = bId + s + 1;
-				}
+                if (s == radialSubdivisions - 1) {
+                    triangles[fid + s * 6 + 3] = bId + s;
+                    triangles[fid + s * 6 + 4] = tId;
+                    triangles[fid + s * 6 + 5] = bId;
+                } else {
+                    triangles[fid + s * 6 + 3] = bId + s;
+                    triangles[fid + s * 6 + 4] = tId + s + 1;
+                    triangles[fid + s * 6 + 5] = bId + s + 1;
+                }
             }
         }
 
