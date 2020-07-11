@@ -14,11 +14,11 @@ public class SpaceColonization : MonoBehaviour {
     public Vector2 length = new Vector2(0.1f, 0.2f);
 
     [Header("Space Colonization Attributes")]
-    public float maxDist = 1f;
-    public float minDist = .1f;
+    public Vector2 dist = new Vector2(0.1f, 1f);
     public int numLeaves = 500;
     [Range(0, 350)]
     public int growIterations = 1;
+    public Vector3 rootPos = new Vector3(0, -200, 0);
 
     [Header("Mesh Generation")]
     [Range(0.5f,4)]
@@ -50,15 +50,7 @@ public class SpaceColonization : MonoBehaviour {
 
         //set up tree
         tree = treeObject.AddComponent<Tree>();
-        tree.leafMat = leafMat;
-        tree.parent = this.transform;
-        tree.width = width;
-        tree.length = length;
-        tree.minDist = minDist;
-        tree.maxDist = maxDist;
-        tree.numLeaves = numLeaves;
-        tree.invertedGrowth = invertedGrowth;
-        tree.radialSubdivisions = radialSubdivisions;
+        tree.SCRef = this;
 
         tree.setup();
 
