@@ -428,11 +428,13 @@ MonoBehaviour:
   length: {x: 1.5, y: 2.5}
   dist: {x: 10, y: 100}
   numLeaves: 800
-  growIterations: 1
+  growIterations: 100
   rootPos: {x: 0, y: -200, z: 0}
-  invertedGrowth: 3.5
+  invertedGrowth: 3
   meshMaterial: {fileID: 2100000, guid: 22ffb15f5a32058448ae7ab2f64b18df, type: 2}
-  radialSubdivisions: 5
+  radialSubdivisions: 3
+  curTime: 0
+  maxTime: 1
 --- !u!4 &504084192
 Transform:
   m_ObjectHideFlags: 0

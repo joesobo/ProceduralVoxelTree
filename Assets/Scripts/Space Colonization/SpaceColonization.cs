@@ -19,12 +19,18 @@ public class SpaceColonization : MonoBehaviour {
     [Range(0, 350)]
     public int growIterations = 1;
     public Vector3 rootPos = new Vector3(0, -200, 0);
+    private bool startGen = false;
+    private bool isGenerating = false;
+    private bool isShown = false;
+    private int growIndex = 0;
+    private float curTimeoutTime = 0;
+    public float maxTimeoutTime = 1;
 
     [Header("Mesh Generation")]
-    [Range(0.5f,4)]
+    [Range(0.5f, 4)]
     public float invertedGrowth = 1.5f;
     public Material meshMaterial;
-    [Range(3,10)]
+    [Range(3, 10)]
     public int radialSubdivisions = 10;
 
     private Helper helper;
@@ -33,7 +39,37 @@ public class SpaceColonization : MonoBehaviour {
         helper = new Helper();
     }
 
+    void Update() {
+        if (startGen) {
+            if (isGenerating) {
+                curTimeoutTime += Time.deltaTime;
+
+                if (curTimeoutTime < maxTimeoutTime && growIndex < growIterations) {
+                    growIndex++;
+                    tree.grow();
+                } else {
+                    isGenerating = false;
+                }                
+            }
+
+            if (!isGenerating && !isShown) {
+                tree.show();
+                isShown = true;
+                startGen = false;
+            }
+        }
+    }
+
     public void Generate() {
+        //reset timeout
+        curTimeoutTime = 0;
+        growIndex = 0;
+        startGen = false;
+        isGenerating = false;
+        isShown = false;
+
+        Debug.Log("Generating Tree...");
+
         //clean up old stuff
         helper.ClearAllChildren(this.transform);
         Destroy(treeObject);
@@ -54,11 +90,10 @@ public class SpaceColonization : MonoBehaviour {
 
         tree.setup();
 
-        for (int i = 0; i < growIterations; i++) {
-            tree.grow();
-        }
+        startGen = true;
+        isGenerating = true;
 
-        tree.show();
+        Debug.Log("Finished Tree Generation");
     }
 
     public void ToggleLeaves() {
