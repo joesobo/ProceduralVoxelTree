@@ -16,7 +16,6 @@ public class Leaf : MonoBehaviour {
     public void show(Transform parent) {
         objectRef = GameObject.CreatePrimitive(PrimitiveType.Cube);
         objectRef.name = "Leaf Reference";
-        //TODO: set material
         objectRef.transform.position = position;
         objectRef.transform.parent = parent;
     }

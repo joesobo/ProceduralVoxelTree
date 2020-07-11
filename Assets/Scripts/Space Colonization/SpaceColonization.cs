@@ -72,4 +72,10 @@ public class SpaceColonization : MonoBehaviour {
     public void ToggleLeaves() {
         tree.toggleLeaves();
     }
+
+    public void ToggleShowLeafReferences() {
+        foreach (Transform child in this.transform) {
+            child.gameObject.SetActive(!child.gameObject.activeSelf);
+        }
+    }
 }

@@ -424,14 +424,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leafMat: {fileID: 2100000, guid: 067fea11dc3d34a418179d3601f24bb3, type: 2}
-  minWidth: 1.5
-  maxWidth: 2.5
-  minLength: 1.5
-  maxLength: 2.5
+  width: {x: 1.5, y: 2.5}
+  length: {x: 1.5, y: 2.5}
   maxDist: 100
   minDist: 10
   numLeaves: 800
-  growIterations: 250
+  growIterations: 100
   invertedGrowth: 3.5
   meshMaterial: {fileID: 2100000, guid: 22ffb15f5a32058448ae7ab2f64b18df, type: 2}
   radialSubdivisions: 5
