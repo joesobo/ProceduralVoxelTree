@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour {
     private MeshFilter filter;
-    //public GameObject leafPrefab;
+
     public Material leafMat;
     public Transform parent;
     private List<GameObject> leaves = new List<GameObject>();
@@ -12,10 +12,8 @@ public class Tree : MonoBehaviour {
     private List<Branch> branches = new List<Branch>();
     public float invertedGrowth;
 
-    public float minWidth;
-    public float maxWidth;
-    public float minLength;
-    public float maxLength;
+    public Vector2 width;
+    public Vector2 length;
 
     public float maxDist = 1f;
     public float minDist = .1f;
@@ -30,7 +28,7 @@ public class Tree : MonoBehaviour {
             leavesRef.Add(new Leaf());
         }
 
-        Branch root = new Branch(rootPos, Vector3.up, null, minWidth, maxWidth, minLength, maxLength);
+        Branch root = new Branch(rootPos, Vector3.up, null, width, length);
 
         branches.Add(root);
 
@@ -128,7 +126,7 @@ public class Tree : MonoBehaviour {
             Branch b = branches[i];
 
             if (b.children.Count == 0) {
-                newSize = Random.Range(b.minWidth, b.maxWidth);
+                newSize = Random.Range(b.width.x, b.width.y);
             } else {
                 foreach (Branch bc in b.children) {
                     newSize += Mathf.Pow(bc.size, invertedGrowth);
@@ -154,7 +152,7 @@ public class Tree : MonoBehaviour {
 
                 Vector3 pos = new Vector3(Mathf.Cos(alpha) * b.size, 0, Mathf.Sin(alpha) * b.size);
                 pos = quat * pos;
-                pos += b.position + (b.direction * Random.Range(b.minLength, b.maxLength));
+                pos += b.position + (b.direction * Random.Range(b.length.x, b.length.y));
                 vertices[vertIndex + s] = pos - rootPos;
 
                 if (b.parentBranch == null) {

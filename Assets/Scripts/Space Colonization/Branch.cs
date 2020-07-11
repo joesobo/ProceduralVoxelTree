@@ -8,10 +8,8 @@ public class Branch {
     public Vector3 originalDir;
     public Branch parentBranch;
     public int leafCount = 0;
-    public float minWidth;
-    public float maxWidth;
-    public float minLength;
-    public float maxLength;
+    public Vector2 width;
+    public Vector2 length;
 
     public float size = 0;
     public List<Branch> children = new List<Branch>();
@@ -20,21 +18,19 @@ public class Branch {
 
     private Helper helper = new Helper();
 
-    public Branch(Vector3 pos, Vector3 dir, Branch parentBranch, float minWidth, float maxWidth, float minLength, float maxLength) {
+    public Branch(Vector3 pos, Vector3 dir, Branch parentBranch, Vector2 width, Vector2 length) {
         this.position = pos;
         this.direction = dir;
         this.originalDir = this.direction;
         this.parentBranch = parentBranch;
-        this.minWidth = minWidth;
-        this.maxWidth = maxWidth;
-        this.minLength = minLength;
-        this.maxLength = maxLength;
+        this.width = width;
+        this.length = length;
     }
 
     public Branch next() {
-        Vector3 nextDir = (direction * Random.Range(minLength, maxLength));
+        Vector3 nextDir = (direction * Random.Range(length.x, length.y));
         Vector3 nextPos = position + nextDir;
-        Branch newBranch = new Branch(nextPos, direction, this, minWidth, maxWidth, minLength, maxLength);
+        Branch newBranch = new Branch(nextPos, direction, this, width, length);
         children.Add(newBranch);
         return newBranch;
     }

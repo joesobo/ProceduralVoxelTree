@@ -9,6 +9,8 @@ public class SpaceColonizationEditor : Editor {
 
         SpaceColonization spaceColonizer = (SpaceColonization)target;
 
+        GUILayout.Space(8);
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Generate Tree")) {
             spaceColonizer.Generate();
         }
@@ -16,13 +18,22 @@ public class SpaceColonizationEditor : Editor {
         if (GUILayout.Button("Voxelize Tree")) {
 
         }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(8);
 
         if (GUILayout.Button("Show Leaves")) {
 
         }
 
-        if (GUILayout.Button("Save")) {
+        GUILayout.Space(8);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Save to File")) {
 
         }
+
+        if (GUILayout.Button("Remove Tree")) {
+
+        }
+        GUILayout.EndHorizontal();
     }
 }
