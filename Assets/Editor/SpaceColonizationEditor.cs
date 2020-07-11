@@ -21,8 +21,8 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.EndHorizontal();
         GUILayout.Space(8);
 
-        if (GUILayout.Button("Show Leaves")) {
-
+        if (GUILayout.Button("Toggle Leaves")) {
+            spaceColonizer.ToggleLeaves();
         }
 
         GUILayout.Space(8);
@@ -31,7 +31,7 @@ public class SpaceColonizationEditor : Editor {
 
         }
 
-        if (GUILayout.Button("Remove Tree")) {
+        if (GUILayout.Button("Clear Tree")) {
 
         }
         GUILayout.EndHorizontal();

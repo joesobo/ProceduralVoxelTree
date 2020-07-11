@@ -194,4 +194,10 @@ public class Tree : MonoBehaviour {
         treeMesh.RecalculateNormals();
         filter.mesh = treeMesh;
     }
+
+    public void toggleLeaves() {
+        foreach (Transform child in this.transform) {
+            child.gameObject.SetActive(!child.gameObject.activeSelf);
+        }
+    }
 }

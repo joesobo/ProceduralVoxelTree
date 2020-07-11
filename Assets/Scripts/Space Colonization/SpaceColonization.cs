@@ -10,12 +10,8 @@ public class SpaceColonization : MonoBehaviour {
     public Material leafMat;
 
     [Header("Branch Attributes")]
-    // public float minWidth = 0.1f;
-    // public float maxWidth = 0.2f;
     public Vector2 width = new Vector2(0.1f, 0.2f);
     public Vector2 length = new Vector2(0.1f, 0.2f);
-    // public float minLength = 0.1f;
-    // public float maxLength = 0.2f;
 
     [Header("Space Colonization Attributes")]
     public float maxDist = 1f;
@@ -71,5 +67,9 @@ public class SpaceColonization : MonoBehaviour {
         }
 
         tree.show();
+    }
+
+    public void ToggleLeaves() {
+        tree.toggleLeaves();
     }
 }
