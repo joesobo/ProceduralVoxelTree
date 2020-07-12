@@ -6,19 +6,22 @@ public class SpaceColonization : MonoBehaviour {
     private Tree tree;
     private GameObject treeObject;
 
-    [Header("Leaf Attributes")]
+    [HideInInspector]
     public Material leafMat;
+    [Header("Leaf Attributes")]
+    public Color leafColor = Color.white;
 
     [Header("Branch Attributes")]
     public Vector2 width = new Vector2(0.1f, 0.2f);
     public Vector2 length = new Vector2(0.1f, 0.2f);
+    public Color branchColor = Color.white;
 
     [Header("Space Colonization Attributes")]
-    public Vector2 dist = new Vector2(0.1f, 1f);
+    public Vector3 rootPos = new Vector3(0, -200, 0);
     public int numLeaves = 500;
+    public Vector2 dist = new Vector2(0.1f, 1f);
     [Range(0, 350)]
     public int growIterations = 1;
-    public Vector3 rootPos = new Vector3(0, -200, 0);
     private bool startGen = false;
     private bool isGenerating = false;
     private bool isShown = false;
@@ -29,7 +32,7 @@ public class SpaceColonization : MonoBehaviour {
     [Header("Mesh Generation")]
     [Range(0.5f, 4)]
     public float invertedGrowth = 1.5f;
-    public Material meshMaterial;
+    private Material meshMaterial;
     [Range(3, 10)]
     public int radialSubdivisions = 10;
 
@@ -37,6 +40,8 @@ public class SpaceColonization : MonoBehaviour {
 
     private void Start() {
         helper = new Helper();
+        leafMat = new Material(Shader.Find("Standard"));
+        meshMaterial = new Material(Shader.Find("Standard"));
     }
 
     void Update() {
@@ -67,6 +72,9 @@ public class SpaceColonization : MonoBehaviour {
         startGen = false;
         isGenerating = false;
         isShown = false;
+
+        leafMat.color = leafColor;
+        meshMaterial.color = branchColor;
 
         Debug.Log("Generating Tree...");
 
