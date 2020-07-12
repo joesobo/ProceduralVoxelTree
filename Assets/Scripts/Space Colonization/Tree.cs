@@ -76,13 +76,7 @@ public class Tree : MonoBehaviour {
         for (int i = leavesRef.Count - 1; i >= 0; i--) {
             if (leavesRef[i].reached) {
                 //Create new leaf
-                GameObject newLeaf = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                newLeaf.name = "Leaf";
-                newLeaf.GetComponent<MeshRenderer>().material = SCRef.leafMat;
-                newLeaf.transform.position = leavesRef[i].position;
-                newLeaf.transform.localScale = Vector3.one * Random.Range(10, 20);
-                newLeaf.transform.parent = this.transform;
-                leaves.Add(newLeaf);
+                CreateLeaf(i);
 
                 //Remove reference
                 leavesRef[i].RemoveLeafRef();
@@ -189,5 +183,21 @@ public class Tree : MonoBehaviour {
         foreach (Transform child in this.transform) {
             child.gameObject.SetActive(!child.gameObject.activeSelf);
         }
+    }
+
+    public void CreateLeaf(int index) {
+        GameObject newLeaf = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        newLeaf.name = "Leaf";
+
+        Material leafMat = new Material(Shader.Find("Standard"));
+        leafMat.color = new Color(
+            Random.Range(SCRef.leafColor1.r, SCRef.leafColor2.r),
+            Random.Range(SCRef.leafColor1.g, SCRef.leafColor2.g),
+            Random.Range(SCRef.leafColor1.b, SCRef.leafColor2.b));
+        newLeaf.GetComponent<MeshRenderer>().material = leafMat;
+        newLeaf.transform.position = leavesRef[index].position;
+        newLeaf.transform.localScale = Vector3.one * Random.Range(10, 20);
+        newLeaf.transform.parent = this.transform;
+        leaves.Add(newLeaf);
     }
 }

@@ -6,10 +6,11 @@ public class SpaceColonization : MonoBehaviour {
     private Tree tree;
     private GameObject treeObject;
 
-    [HideInInspector]
-    public Material leafMat;
+    //[HideInInspector]
+    //public Material leafMat;
     [Header("Leaf Attributes")]
-    public Color leafColor = Color.white;
+    public Color leafColor1 = Color.white;
+    public Color leafColor2 = Color.white;
 
     [Header("Branch Attributes")]
     public Vector2 width = new Vector2(0.1f, 0.2f);
@@ -40,7 +41,7 @@ public class SpaceColonization : MonoBehaviour {
 
     private void Start() {
         helper = new Helper();
-        leafMat = new Material(Shader.Find("Standard"));
+        //leafMat = new Material(Shader.Find("Standard"));
         meshMaterial = new Material(Shader.Find("Standard"));
     }
 
@@ -73,7 +74,7 @@ public class SpaceColonization : MonoBehaviour {
         isGenerating = false;
         isShown = false;
 
-        leafMat.color = leafColor;
+        //leafMat.color = leafColor;
         meshMaterial.color = branchColor;
 
         Debug.Log("Generating Tree...");
