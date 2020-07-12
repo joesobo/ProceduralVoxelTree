@@ -6,8 +6,6 @@ public class SpaceColonization : MonoBehaviour {
     private Tree tree;
     private GameObject treeObject;
 
-    //[HideInInspector]
-    //public Material leafMat;
     [Header("Leaf Attributes")]
     public Color leafColor1 = Color.white;
     public Color leafColor2 = Color.white;
@@ -21,12 +19,9 @@ public class SpaceColonization : MonoBehaviour {
     public Vector3 rootPos = new Vector3(0, -200, 0);
     public int numLeaves = 500;
     public Vector2 dist = new Vector2(0.1f, 1f);
-    [Range(0, 350)]
-    public int growIterations = 1;
     private bool startGen = false;
     private bool isGenerating = false;
     private bool isShown = false;
-    private int growIndex = 0;
     private float curTimeoutTime = 0;
     public float maxTimeoutTime = 1;
 
@@ -41,7 +36,6 @@ public class SpaceColonization : MonoBehaviour {
 
     private void Start() {
         helper = new Helper();
-        //leafMat = new Material(Shader.Find("Standard"));
         meshMaterial = new Material(Shader.Find("Standard"));
     }
 
@@ -50,8 +44,7 @@ public class SpaceColonization : MonoBehaviour {
             if (isGenerating) {
                 curTimeoutTime += Time.deltaTime;
 
-                if (curTimeoutTime < maxTimeoutTime && growIndex < growIterations) {
-                    growIndex++;
+                if (curTimeoutTime < maxTimeoutTime) {
                     tree.grow();
                 } else {
                     isGenerating = false;
@@ -69,12 +62,10 @@ public class SpaceColonization : MonoBehaviour {
     public void Generate() {
         //reset timeout
         curTimeoutTime = 0;
-        growIndex = 0;
         startGen = false;
         isGenerating = false;
         isShown = false;
 
-        //leafMat.color = leafColor;
         meshMaterial.color = branchColor;
 
         Debug.Log("Generating Tree...");
