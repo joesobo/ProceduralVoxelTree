@@ -7,8 +7,10 @@ public class SpaceColonization : MonoBehaviour {
     private GameObject treeObject;
 
     [Header("Leaf Attributes")]
-    public Color leafColor1 = Color.white;
-    public Color leafColor2 = Color.white;
+    public List<ProceduralColor> inputColors;
+    public List<Color> leafColors = new List<Color>();
+    public bool useReducedSubset = false;
+    public int sublistLength = 8;
 
     [Header("Branch Attributes")]
     public Vector2 width = new Vector2(0.1f, 0.2f);
@@ -33,6 +35,7 @@ public class SpaceColonization : MonoBehaviour {
     public int radialSubdivisions = 10;
 
     private Helper helper;
+    private ColorHelper colorHelper = new ColorHelper();
 
     private void Start() {
         helper = new Helper();
@@ -48,7 +51,7 @@ public class SpaceColonization : MonoBehaviour {
                     tree.grow();
                 } else {
                     isGenerating = false;
-                }                
+                }
             }
 
             if (!isGenerating && !isShown) {
@@ -67,6 +70,10 @@ public class SpaceColonization : MonoBehaviour {
         isShown = false;
 
         meshMaterial.color = branchColor;
+
+        if (leafColors.Count == 0) {
+            GenerateColors();
+        }
 
         Debug.Log("Generating Tree...");
 
@@ -104,5 +111,10 @@ public class SpaceColonization : MonoBehaviour {
         foreach (Transform child in this.transform) {
             child.gameObject.SetActive(!child.gameObject.activeSelf);
         }
+    }
+
+    public void GenerateColors() {
+        Debug.Log("Generating Colors...");
+        leafColors = colorHelper.Generate(inputColors, useReducedSubset, sublistLength);
     }
 }

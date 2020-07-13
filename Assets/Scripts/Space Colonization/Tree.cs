@@ -190,14 +190,22 @@ public class Tree : MonoBehaviour {
         newLeaf.name = "Leaf";
 
         Material leafMat = new Material(Shader.Find("Standard"));
-        leafMat.color = new Color(
-            Random.Range(SCRef.leafColor1.r, SCRef.leafColor2.r),
-            Random.Range(SCRef.leafColor1.g, SCRef.leafColor2.g),
-            Random.Range(SCRef.leafColor1.b, SCRef.leafColor2.b));
+
+        //leafMat.color = RandomColor(SCRef.leafColors[0].color, SCRef.leafColors[1].color);
+        leafMat.color = RandomColorHueBased();
+            
         newLeaf.GetComponent<MeshRenderer>().material = leafMat;
         newLeaf.transform.position = leavesRef[index].position;
         newLeaf.transform.localScale = Vector3.one * Random.Range(10, 20);
         newLeaf.transform.parent = this.transform;
         leaves.Add(newLeaf);
+    }
+
+    public Color RandomColor(Color color1, Color color2) {
+        return new Color(Random.Range(color1.r, color2.r), Random.Range(color1.g, color2.g), Random.Range(color1.b, color2.b));
+    }
+
+    public Color RandomColorHueBased() {
+        return SCRef.leafColors[Random.Range(0, SCRef.leafColors.Count-1)];
     }
 }
