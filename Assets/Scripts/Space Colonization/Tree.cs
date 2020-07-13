@@ -187,21 +187,24 @@ public class Tree : MonoBehaviour {
     }
 
     public void CreateLeaf(int index) {
-        GameObject newLeaf = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        newLeaf.name = "Leaf";
+        for (int i = 0; i < SCData.numLeavesPerNode; i++) {
+            GameObject newLeaf = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            newLeaf.name = "Leaf";
 
-        Material leafMat = new Material(Shader.Find("Standard"));
+            Material leafMat = new Material(Shader.Find("Standard"));
 
-        leafMat.color = RandomColorHueBased();
-            
-        newLeaf.GetComponent<MeshRenderer>().material = leafMat;
-        newLeaf.transform.position = leavesRef[index].position;
-        newLeaf.transform.localScale = Vector3.one * Random.Range(10, 20);
-        newLeaf.transform.parent = this.transform;
-        leaves.Add(newLeaf);
+            leafMat.color = RandomColorHueBased();
+
+            newLeaf.GetComponent<MeshRenderer>().material = leafMat;
+
+            newLeaf.transform.position = Random.insideUnitSphere * SCData.leafSpawnRadius + leavesRef[index].position;
+            newLeaf.transform.localScale = Vector3.one * Random.Range(SCData.leafSize.x, SCData.leafSize.y);
+            newLeaf.transform.parent = this.transform;
+            leaves.Add(newLeaf);
+        }
     }
 
     public Color RandomColorHueBased() {
-        return SCData.leafColors[Random.Range(0, SCData.leafColors.Count-1)];
+        return SCData.leafColors[Random.Range(0, SCData.leafColors.Count - 1)];
     }
 }

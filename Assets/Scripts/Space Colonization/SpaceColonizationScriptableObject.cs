@@ -9,6 +9,11 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     public List<Color> leafColors = new List<Color>();
     public bool useReducedSubset = false;
     public int sublistLength = 8;
+    public Vector2 leafSize = new Vector2(10, 20);
+    [Range(0,50)]
+    public float leafSpawnRadius = 1;
+    [Range(1, 5)]
+    public int numLeavesPerNode = 1;
 
     [Header("Branch Attributes")]
     public Vector2 width = new Vector2(0.1f, 0.2f);
