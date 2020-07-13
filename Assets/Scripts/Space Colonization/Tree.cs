@@ -5,7 +5,8 @@ using UnityEngine;
 public class Tree : MonoBehaviour {
     private MeshFilter filter;
 
-    public SpaceColonization SCRef;
+    public SpaceColonizationScriptableObject SCData;
+    public Transform parent;
 
     private List<GameObject> leaves = new List<GameObject>();
     private List<Leaf> leavesRef = new List<Leaf>();
@@ -14,11 +15,11 @@ public class Tree : MonoBehaviour {
     public void setup() {
         filter = GetComponent<MeshFilter>();
 
-        for (int i = 0; i < SCRef.numLeaves; i++) {
+        for (int i = 0; i < SCData.numLeaves; i++) {
             leavesRef.Add(new Leaf());
         }
 
-        Branch root = new Branch(SCRef.rootPos, Vector3.up, null, SCRef);
+        Branch root = new Branch(SCData.rootPos, Vector3.up, null, SCData);
 
         branches.Add(root);
 
@@ -29,7 +30,7 @@ public class Tree : MonoBehaviour {
             for (int i = 0; i < leavesRef.Count; i++) {
                 float dist = Vector3.Distance(current.position, leavesRef[i].position);
 
-                if (dist < SCRef.dist.y) {
+                if (dist < SCData.dist.y) {
                     found = true;
                 }
             }
@@ -52,11 +53,11 @@ public class Tree : MonoBehaviour {
                 Branch branch = branches[j];
                 float dist = Vector3.Distance(leaf.position, branch.position);
 
-                if (dist < SCRef.dist.x) {
+                if (dist < SCData.dist.x) {
                     leaf.reached = true;
                     closestBranch = null;
                     break;
-                } else if (dist > SCRef.dist.y) {
+                } else if (dist > SCData.dist.y) {
 
                 } else if (closestBranch == null || dist < record) {
                     closestBranch = branch;
@@ -102,7 +103,7 @@ public class Tree : MonoBehaviour {
         Mesh treeMesh = new Mesh();
 
         for (int i = 0; i < leavesRef.Count; i++) {
-            leavesRef[i].show(SCRef.transform);
+            leavesRef[i].show(parent);
         }
 
         for (int i = branches.Count - 1; i >= 0; i--) {
@@ -110,58 +111,58 @@ public class Tree : MonoBehaviour {
             Branch b = branches[i];
 
             if (b.children.Count == 0) {
-                newSize = Random.Range(b.SCRef.width.x, b.SCRef.width.y);
+                newSize = Random.Range(b.scData.width.x, b.scData.width.y);
             } else {
                 foreach (Branch bc in b.children) {
-                    newSize += Mathf.Pow(bc.size, SCRef.invertedGrowth);
+                    newSize += Mathf.Pow(bc.size, SCData.invertedGrowth);
                 }
-                newSize = Mathf.Pow(newSize, 1f / SCRef.invertedGrowth);
+                newSize = Mathf.Pow(newSize, 1f / SCData.invertedGrowth);
             }
             b.size = newSize;
         }
 
-        Vector3[] vertices = new Vector3[(branches.Count + 1) * SCRef.radialSubdivisions];
-        int[] triangles = new int[branches.Count * SCRef.radialSubdivisions * 6];
+        Vector3[] vertices = new Vector3[(branches.Count + 1) * SCData.radialSubdivisions];
+        int[] triangles = new int[branches.Count * SCData.radialSubdivisions * 6];
 
         for (int i = 0; i < branches.Count; i++) {
             Branch b = branches[i];
 
-            int vertIndex = SCRef.radialSubdivisions * i;
+            int vertIndex = SCData.radialSubdivisions * i;
             b.verticesId = vertIndex;
 
             Quaternion quat = Quaternion.FromToRotation(Vector3.up, b.direction);
 
-            for (int s = 0; s < SCRef.radialSubdivisions; s++) {
-                float alpha = ((float)s / SCRef.radialSubdivisions) * Mathf.PI * 2f;
+            for (int s = 0; s < SCData.radialSubdivisions; s++) {
+                float alpha = ((float)s / SCData.radialSubdivisions) * Mathf.PI * 2f;
 
                 Vector3 pos = new Vector3(Mathf.Cos(alpha) * b.size, 0, Mathf.Sin(alpha) * b.size);
                 pos = quat * pos;
-                pos += b.position + (b.direction * Random.Range(b.SCRef.length.x, b.SCRef.length.y));
-                vertices[vertIndex + s] = pos - SCRef.rootPos;
+                pos += b.position + (b.direction * Random.Range(b.scData.length.x, b.scData.length.y));
+                vertices[vertIndex + s] = pos - SCData.rootPos;
 
                 if (b.parentBranch == null) {
-                    vertices[branches.Count * SCRef.radialSubdivisions + s] = b.position + new Vector3(Mathf.Cos(alpha) * b.size, 0, Mathf.Sin(alpha) * b.size) - SCRef.rootPos;
+                    vertices[branches.Count * SCData.radialSubdivisions + s] = b.position + new Vector3(Mathf.Cos(alpha) * b.size, 0, Mathf.Sin(alpha) * b.size) - SCData.rootPos;
                 }
             }
         }
 
         for (int i = 0; i < branches.Count; i++) {
             Branch b = branches[i];
-            int fid = i * SCRef.radialSubdivisions * 2 * 3;
-            int bId = b.parentBranch != null ? b.parentBranch.verticesId : branches.Count * SCRef.radialSubdivisions;
+            int fid = i * SCData.radialSubdivisions * 2 * 3;
+            int bId = b.parentBranch != null ? b.parentBranch.verticesId : branches.Count * SCData.radialSubdivisions;
             int tId = b.verticesId;
 
-            for (int s = 0; s < SCRef.radialSubdivisions; s++) {
+            for (int s = 0; s < SCData.radialSubdivisions; s++) {
                 triangles[fid + s * 6] = bId + s;
                 triangles[fid + s * 6 + 1] = tId + s;
 
-                if (s == SCRef.radialSubdivisions - 1) {
+                if (s == SCData.radialSubdivisions - 1) {
                     triangles[fid + s * 6 + 2] = tId;
                 } else {
                     triangles[fid + s * 6 + 2] = tId + s + 1;
                 }
 
-                if (s == SCRef.radialSubdivisions - 1) {
+                if (s == SCData.radialSubdivisions - 1) {
                     triangles[fid + s * 6 + 3] = bId + s;
                     triangles[fid + s * 6 + 4] = tId;
                     triangles[fid + s * 6 + 5] = bId;
@@ -191,7 +192,6 @@ public class Tree : MonoBehaviour {
 
         Material leafMat = new Material(Shader.Find("Standard"));
 
-        //leafMat.color = RandomColor(SCRef.leafColors[0].color, SCRef.leafColors[1].color);
         leafMat.color = RandomColorHueBased();
             
         newLeaf.GetComponent<MeshRenderer>().material = leafMat;
@@ -201,11 +201,7 @@ public class Tree : MonoBehaviour {
         leaves.Add(newLeaf);
     }
 
-    public Color RandomColor(Color color1, Color color2) {
-        return new Color(Random.Range(color1.r, color2.r), Random.Range(color1.g, color2.g), Random.Range(color1.b, color2.b));
-    }
-
     public Color RandomColorHueBased() {
-        return SCRef.leafColors[Random.Range(0, SCRef.leafColors.Count-1)];
+        return SCData.leafColors[Random.Range(0, SCData.leafColors.Count-1)];
     }
 }

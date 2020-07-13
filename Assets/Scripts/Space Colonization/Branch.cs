@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Branch {
-    public SpaceColonization SCRef;
+    public SpaceColonizationScriptableObject scData;
 
     public Vector3 position;
     public Vector3 direction;
@@ -18,18 +18,18 @@ public class Branch {
 
     private Helper helper = new Helper();
 
-    public Branch(Vector3 pos, Vector3 dir, Branch parentBranch, SpaceColonization SCRef) {
+    public Branch(Vector3 pos, Vector3 dir, Branch parentBranch, SpaceColonizationScriptableObject scData) {
         this.position = pos;
         this.direction = dir;
         this.originalDir = this.direction;
         this.parentBranch = parentBranch;
-        this.SCRef = SCRef;
+        this.scData = scData;
     }
 
     public Branch next() {
-        Vector3 nextDir = (direction * Random.Range(SCRef.length.x, SCRef.length.y));
+        Vector3 nextDir = (direction * Random.Range(scData.length.x, scData.length.y));
         Vector3 nextPos = position + nextDir;
-        Branch newBranch = new Branch(nextPos, direction, this, SCRef);
+        Branch newBranch = new Branch(nextPos, direction, this, scData);
         children.Add(newBranch);
         return newBranch;
     }

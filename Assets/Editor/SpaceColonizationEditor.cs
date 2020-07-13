@@ -12,15 +12,6 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.Space(8);
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Generate Leaf Colors", GUILayout.MaxWidth(305))) {
-            spaceColonizer.GenerateColors();
-        }
-        GUILayout.FlexibleSpace();
-        GUILayout.EndHorizontal();
-
-        GUILayout.Space(8);
-        GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
         if (GUILayout.Button("Generate Tree", GUILayout.MaxWidth(150))) {
             spaceColonizer.Generate();
         }

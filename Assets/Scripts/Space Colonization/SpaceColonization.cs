@@ -6,36 +6,16 @@ public class SpaceColonization : MonoBehaviour {
     private Tree tree;
     private GameObject treeObject;
 
-    [Header("Leaf Attributes")]
-    public List<ProceduralColor> inputColors;
-    public List<Color> leafColors = new List<Color>();
-    public bool useReducedSubset = false;
-    public int sublistLength = 8;
+    public SpaceColonizationScriptableObject SCData;
 
-    [Header("Branch Attributes")]
-    public Vector2 width = new Vector2(0.1f, 0.2f);
-    public Vector2 length = new Vector2(0.1f, 0.2f);
-    public Color branchColor = Color.white;
-
-    [Header("Space Colonization Attributes")]
-    public Vector3 rootPos = new Vector3(0, -200, 0);
-    public int numLeaves = 500;
-    public Vector2 dist = new Vector2(0.1f, 1f);
     private bool startGen = false;
     private bool isGenerating = false;
     private bool isShown = false;
     private float curTimeoutTime = 0;
-    public float maxTimeoutTime = 1;
 
-    [Header("Mesh Generation")]
-    [Range(0.5f, 4)]
-    public float invertedGrowth = 1.5f;
     private Material meshMaterial;
-    [Range(3, 10)]
-    public int radialSubdivisions = 10;
 
     private Helper helper;
-    private ColorHelper colorHelper = new ColorHelper();
 
     private void Start() {
         helper = new Helper();
@@ -47,7 +27,7 @@ public class SpaceColonization : MonoBehaviour {
             if (isGenerating) {
                 curTimeoutTime += Time.deltaTime;
 
-                if (curTimeoutTime < maxTimeoutTime) {
+                if (curTimeoutTime < SCData.maxTimeoutTime) {
                     tree.grow();
                 } else {
                     isGenerating = false;
@@ -69,11 +49,7 @@ public class SpaceColonization : MonoBehaviour {
         isGenerating = false;
         isShown = false;
 
-        meshMaterial.color = branchColor;
-
-        if (leafColors.Count == 0) {
-            GenerateColors();
-        }
+        meshMaterial.color = SCData.branchColor;
 
         Debug.Log("Generating Tree...");
 
@@ -93,7 +69,8 @@ public class SpaceColonization : MonoBehaviour {
 
         //set up tree
         tree = treeObject.AddComponent<Tree>();
-        tree.SCRef = this;
+        tree.SCData = SCData;
+        tree.parent = this.transform;
 
         tree.setup();
 
@@ -111,10 +88,5 @@ public class SpaceColonization : MonoBehaviour {
         foreach (Transform child in this.transform) {
             child.gameObject.SetActive(!child.gameObject.activeSelf);
         }
-    }
-
-    public void GenerateColors() {
-        Debug.Log("Generating Colors...");
-        leafColors = colorHelper.Generate(inputColors, useReducedSubset, sublistLength);
     }
 }
