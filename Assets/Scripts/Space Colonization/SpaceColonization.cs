@@ -8,6 +8,8 @@ public class SpaceColonization : MonoBehaviour {
 
     public SpaceColonizationScriptableObject SCData;
 
+    public bool showLeafRef = false;
+
     private bool startGen = false;
     private bool isGenerating = false;
     private bool isShown = false;
@@ -24,6 +26,7 @@ public class SpaceColonization : MonoBehaviour {
 
     void Update() {
         if (startGen) {
+            SCData.showLeafRef = showLeafRef;
             if (isGenerating) {
                 curTimeoutTime += Time.deltaTime;
 

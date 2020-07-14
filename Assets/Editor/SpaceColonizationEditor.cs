@@ -4,10 +4,12 @@ using UnityEditor;
 [CustomEditor(typeof(SpaceColonization))]
 public class SpaceColonizationEditor : Editor {
 
-    public override void OnInspectorGUI() {
-        base.OnInspectorGUI();
+    private bool toggleLeafReferences = false;
 
+    public override void OnInspectorGUI() {
         SpaceColonization spaceColonizer = (SpaceColonization)target;
+
+        base.OnInspectorGUI();  
 
         GUILayout.Space(8);
         GUILayout.BeginHorizontal();
@@ -25,13 +27,10 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.Space(8);
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Toggle Leaves", GUILayout.MaxWidth(150))) {
+        if (GUILayout.Button("Toggle Leaves", GUILayout.MaxWidth(303))) {
             spaceColonizer.ToggleLeaves();
         }
 
-        if (GUILayout.Button("Toggle Leaf References", GUILayout.MaxWidth(150))) {
-            spaceColonizer.ToggleShowLeafReferences();
-        }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
 

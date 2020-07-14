@@ -102,8 +102,10 @@ public class Tree : MonoBehaviour {
     public void show() {
         Mesh treeMesh = new Mesh();
 
-        for (int i = 0; i < leavesRef.Count; i++) {
-            leavesRef[i].show(parent);
+        if (SCData.showLeafRef) {
+            for (int i = 0; i < leavesRef.Count; i++) {
+                leavesRef[i].show(parent);
+            }
         }
 
         for (int i = branches.Count - 1; i >= 0; i--) {

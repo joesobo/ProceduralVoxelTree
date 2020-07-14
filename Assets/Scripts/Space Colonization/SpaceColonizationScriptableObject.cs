@@ -34,6 +34,8 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     public int radialSubdivisions = 10;
 
     private ColorHelper colorHelper;
+    [HideInInspector]
+    public bool showLeafRef;
 
     public void GenerateColors() {
         Debug.Log("Generating Colors...");
