@@ -30,7 +30,7 @@ public class Tree : MonoBehaviour {
             for (int i = 0; i < leavesRef.Count; i++) {
                 float dist = Vector3.Distance(current.position, leavesRef[i].position);
 
-                if (dist < SCData.dist.y) {
+                if (dist < SCData.branchDist.y) {
                     found = true;
                 }
             }
@@ -53,11 +53,11 @@ public class Tree : MonoBehaviour {
                 Branch branch = branches[j];
                 float dist = Vector3.Distance(leaf.position, branch.position);
 
-                if (dist < SCData.dist.x) {
+                if (dist < SCData.branchDist.x) {
                     leaf.reached = true;
                     closestBranch = null;
                     break;
-                } else if (dist > SCData.dist.y) {
+                } else if (dist > SCData.branchDist.y) {
 
                 } else if (closestBranch == null || dist < record) {
                     closestBranch = branch;

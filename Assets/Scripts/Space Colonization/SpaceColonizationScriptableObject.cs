@@ -30,17 +30,20 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     public Vector3 rootPos = new Vector3(0, -200, 0);
     public int numLeafRef = 500;
     [Tooltip("Min and Max distance to check for node when spawning branches")]
-    public Vector2 dist = new Vector2(0.1f, 1f);
+    public Vector2 branchDist = new Vector2(0.1f, 1f);
     [Tooltip("Amount of time before algorithm stops spawning")]
     public float maxTimeoutTime = 1;
 
     [Header("Mesh Generation")]
     [Range(0.5f, 4)]
+    [Tooltip("Thickness factor of branches")]
     public float invertedGrowth = 1.5f;
-    [Range(3, 10)]
+    [Range(1, 10)]
+    [Tooltip("Number of divisions per ring of branch")]
     public int radialSubdivisions = 10;
 
     [Header("Voxelization")]
+    [Range(32, 256)]
     public int resolution = 32;
 
     private ColorHelper colorHelper;
