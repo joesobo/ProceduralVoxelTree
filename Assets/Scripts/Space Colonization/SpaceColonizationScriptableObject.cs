@@ -4,11 +4,13 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "SpaceColonizationData", menuName = "SpaceColonization/SpaceColonizationScriptableObject")]
 public class SpaceColonizationScriptableObject : ScriptableObject {
-    [Header("Leaf Attributes")]
+    [Header("Leaf Colors")]
     public List<ProceduralColor> inputColors;
     public List<Color> leafColors = new List<Color>();
     public bool useReducedSubset = false;
     public int sublistLength = 8;
+
+    [Header("Leaf Attributes")]
     public Vector2 leafSize = new Vector2(10, 20);
     [Range(0,50)]
     public float leafSpawnRadius = 1;
