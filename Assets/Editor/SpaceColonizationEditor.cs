@@ -25,8 +25,11 @@ public class SpaceColonizationEditor : Editor {
             Debug.Log("Voxelizing...");
             MeshFilter voxelFilter = spaceColonizer.SetupVoxelize();
 
-            //TODO: option to set resolution and 2 bools
-            var data = GPUVoxelizer.Voxelize(spaceColonizer.voxelizer, spaceColonizer.treeObject.GetComponent<MeshFilter>().mesh, 32, true);
+            var data = GPUVoxelizer.Voxelize(
+                spaceColonizer.voxelizer, 
+                spaceColonizer.treeObject.GetComponent<MeshFilter>().mesh, 
+                spaceColonizer.SCData.resolution, 
+                true);
 			voxelFilter.sharedMesh = VoxelMesh.Build(data.GetData(), data.UnitLength, false);
 			data.Dispose();
 

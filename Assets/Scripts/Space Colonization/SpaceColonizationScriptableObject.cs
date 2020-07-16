@@ -33,9 +33,11 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     [Header("Mesh Generation")]
     [Range(0.5f, 4)]
     public float invertedGrowth = 1.5f;
-    
     [Range(3, 10)]
     public int radialSubdivisions = 10;
+
+    [Header("Voxelization")]
+    public int resolution = 32;
 
     private ColorHelper colorHelper;
     [HideInInspector]
