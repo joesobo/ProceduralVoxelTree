@@ -5,12 +5,20 @@ using UnityEngine;
 public class Leaf : MonoBehaviour {
     public Vector3 position;
     public bool reached = false;
+    private SpaceColonizationScriptableObject SCData;
 
     private GameObject objectRef;
 
-    public Leaf() {
-        this.position = Random.insideUnitSphere * 200 + new Vector3(0, 50, 0);
-        //this.position = new Vector2(Random.Range(-200, 200), Random.Range(-200, 200));
+    public Leaf(SpaceColonizationScriptableObject SCData) {
+        this.SCData = SCData;
+
+        if (SCData.leafRefShape == SpaceColonizationScriptableObject.LeafRefShape.Sphere) {
+            this.position = Random.insideUnitSphere * SCData.leafRefSpawnSize + SCData.leafRefOffset;
+        } else{
+            this.position = new Vector3(Random.Range(-SCData.leafRefSpawnSize, SCData.leafRefSpawnSize), 
+                                        Random.Range(-SCData.leafRefSpawnSize, SCData.leafRefSpawnSize),
+                                        Random.Range(-SCData.leafRefSpawnSize, SCData.leafRefSpawnSize));
+        }
     }
 
     public void show(Transform parent) {

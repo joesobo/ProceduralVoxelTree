@@ -16,7 +16,7 @@ public class Tree : MonoBehaviour {
         filter = GetComponent<MeshFilter>();
 
         for (int i = 0; i < SCData.numLeafRef; i++) {
-            leavesRef.Add(new Leaf());
+            leavesRef.Add(new Leaf(SCData));
         }
 
         Branch root = new Branch(SCData.rootPos, Vector3.up, null, SCData);

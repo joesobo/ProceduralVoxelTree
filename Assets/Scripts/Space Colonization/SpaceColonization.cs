@@ -72,7 +72,7 @@ public class SpaceColonization : MonoBehaviour {
         //new tree object
         treeObject = new GameObject();
         treeObject.name = "Tree";
-        treeObject.transform.position = new Vector3(0, -200, 0);
+        treeObject.transform.position = SCData.rootPos;
 
         //set up mesh
         treeObject.AddComponent<MeshFilter>();
