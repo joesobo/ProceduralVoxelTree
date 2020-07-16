@@ -14,6 +14,8 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     public float leafSpawnRadius = 1;
     [Range(1, 5)]
     public int numLeavesPerNode = 1;
+    [Range(0,75)]
+    public float leafSpread = 1;
 
     [Header("Branch Attributes")]
     public Vector2 width = new Vector2(0.1f, 0.2f);

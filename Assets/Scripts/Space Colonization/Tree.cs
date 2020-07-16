@@ -77,7 +77,7 @@ public class Tree : MonoBehaviour {
         for (int i = leavesRef.Count - 1; i >= 0; i--) {
             if (leavesRef[i].reached) {
                 //Create new leaf
-                CreateLeaf(i);
+                CreateLeaves(i);
 
                 //Remove reference
                 leavesRef[i].RemoveLeafRef();
@@ -188,22 +188,38 @@ public class Tree : MonoBehaviour {
         }
     }
 
-    public void CreateLeaf(int index) {
+    public void CreateLeaves(int index) {
+        Vector3 leafPos;
+        Collider[] hitColliders;
+
         for (int i = 0; i < SCData.numLeavesPerNode; i++) {
-            GameObject newLeaf = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            newLeaf.name = "Leaf";
+            leafPos = (Random.insideUnitSphere * SCData.leafSpawnRadius) + leavesRef[index].position;
+            hitColliders = Physics.OverlapSphere(leafPos, SCData.leafSpread);
 
-            Material leafMat = new Material(Shader.Find("Standard"));
-
-            leafMat.color = RandomColorHueBased();
-
-            newLeaf.GetComponent<MeshRenderer>().material = leafMat;
-
-            newLeaf.transform.position = Random.insideUnitSphere * SCData.leafSpawnRadius + leavesRef[index].position;
-            newLeaf.transform.localScale = Vector3.one * Random.Range(SCData.leafSize.x, SCData.leafSize.y);
-            newLeaf.transform.parent = this.transform;
-            leaves.Add(newLeaf);
+            if (hitColliders.Length == 0) {
+                CreateLeaf(leafPos);
+                Physics.SyncTransforms();
+            }
         }
+    }
+
+    public void CreateLeaf(Vector3 pos) {
+        GameObject newLeaf;
+        Material leafMat;
+
+        newLeaf = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        newLeaf.name = "Leaf";
+
+        leafMat = new Material(Shader.Find("Standard"));
+
+        leafMat.color = RandomColorHueBased();
+
+        newLeaf.GetComponent<MeshRenderer>().material = leafMat;
+
+        newLeaf.transform.position = pos;
+        newLeaf.transform.localScale = Vector3.one * Random.Range(SCData.leafSize.x, SCData.leafSize.y);
+        newLeaf.transform.parent = this.transform;
+        leaves.Add(newLeaf);
     }
 
     public Color RandomColorHueBased() {

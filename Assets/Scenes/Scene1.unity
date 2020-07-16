@@ -423,7 +423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7367712ed20bf4081e6be1fd803037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SCData: {fileID: 11400000, guid: 28f80869148be1748ac4b731aea09354, type: 2}
+  SCData: {fileID: 11400000, guid: 11160c977970b0540ada81ee40d913c6, type: 2}
+  showLeafRef: 0
 --- !u!4 &504084192
 Transform:
   m_ObjectHideFlags: 0
