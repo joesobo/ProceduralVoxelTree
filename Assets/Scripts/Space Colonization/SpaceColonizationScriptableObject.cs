@@ -13,10 +13,12 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     [Header("Leaf Attributes")]
     public Vector2 leafSize = new Vector2(10, 20);
     [Range(0,50)]
+    [Tooltip("Radius from node that leaves can spawn")]
     public float leafSpawnRadius = 1;
     [Range(1, 5)]
     public int numLeavesPerNode = 1;
     [Range(0,75)]
+    [Tooltip("Distance between each leaf")]
     public float leafSpread = 1;
 
     [Header("Branch Attributes")]
@@ -26,8 +28,10 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
 
     [Header("Space Colonization Attributes")]
     public Vector3 rootPos = new Vector3(0, -200, 0);
-    public int numLeaves = 500;
+    public int numLeafRef = 500;
+    [Tooltip("Min and Max distance to check for node when spawning branches")]
     public Vector2 dist = new Vector2(0.1f, 1f);
+    [Tooltip("Amount of time before algorithm stops spawning")]
     public float maxTimeoutTime = 1;
 
     [Header("Mesh Generation")]

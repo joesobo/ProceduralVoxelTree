@@ -15,7 +15,7 @@ public class Tree : MonoBehaviour {
     public void setup() {
         filter = GetComponent<MeshFilter>();
 
-        for (int i = 0; i < SCData.numLeaves; i++) {
+        for (int i = 0; i < SCData.numLeafRef; i++) {
             leavesRef.Add(new Leaf());
         }
 
