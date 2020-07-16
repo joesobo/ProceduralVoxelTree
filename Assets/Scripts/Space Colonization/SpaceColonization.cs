@@ -46,19 +46,9 @@ public class SpaceColonization : MonoBehaviour {
     }
 
     public void Generate() {
-        //reset timeout
-        curTimeoutTime = 0;
-        startGen = false;
-        isGenerating = false;
-        isShown = false;
-
-        meshMaterial.color = SCData.branchColor;
-
         Debug.Log("Generating Tree...");
 
-        //clean up old stuff
-        helper.ClearAllChildren(this.transform);
-        Destroy(treeObject);
+        CleanUp();
 
         //new tree object
         treeObject = new GameObject();
@@ -68,6 +58,7 @@ public class SpaceColonization : MonoBehaviour {
         //set up mesh
         treeObject.AddComponent<MeshFilter>();
         MeshRenderer renderer = treeObject.AddComponent<MeshRenderer>();
+        meshMaterial.color = SCData.branchColor;
         renderer.material = meshMaterial;
 
         //set up tree
@@ -81,6 +72,18 @@ public class SpaceColonization : MonoBehaviour {
         isGenerating = true;
 
         Debug.Log("Finished Tree Generation");
+    }
+
+    public void CleanUp() {
+        //reset timeout
+        curTimeoutTime = 0;
+        startGen = false;
+        isGenerating = false;
+        isShown = false;
+
+        //clean up old stuff
+        helper.ClearAllChildren(this.transform);
+        Destroy(treeObject);
     }
 
     public void ToggleLeaves() {

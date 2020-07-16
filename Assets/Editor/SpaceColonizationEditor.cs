@@ -42,7 +42,7 @@ public class SpaceColonizationEditor : Editor {
         }
 
         if (GUILayout.Button("Clear Tree", GUILayout.MaxWidth(150))) {
-
+            spaceColonizer.CleanUp();
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
