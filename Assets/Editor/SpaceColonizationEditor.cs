@@ -38,6 +38,16 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.Space(8);
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
+        if (GUILayout.Button("Toggle Active Tree", GUILayout.MaxWidth(303))) {
+            spaceColonizer.ToggleActiveTree();
+        }
+
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(8);
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
         if (GUILayout.Button("Toggle Leaves", GUILayout.MaxWidth(303))) {
             spaceColonizer.ToggleLeaves();
         }

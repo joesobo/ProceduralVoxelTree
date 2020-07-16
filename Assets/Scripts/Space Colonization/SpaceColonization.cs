@@ -7,7 +7,7 @@ public class SpaceColonization : MonoBehaviour {
     [HideInInspector]
     public GameObject treeObject;
     [HideInInspector]
-    GameObject VoxelTree;
+    GameObject voxelTree;
 
     public SpaceColonizationScriptableObject SCData;
 
@@ -97,11 +97,16 @@ public class SpaceColonization : MonoBehaviour {
     }
 
     public void CleanUpVoxel() {
-        Destroy(VoxelTree);
+        Destroy(voxelTree);
     }
 
     public void ToggleLeaves() {
         tree.toggleLeaves();
+    }
+
+    public void ToggleActiveTree() {
+        treeObject.SetActive(!treeObject.activeSelf);
+        voxelTree.SetActive(!voxelTree.activeSelf);
     }
 
     public void ToggleShowLeafReferences() {
@@ -113,13 +118,15 @@ public class SpaceColonization : MonoBehaviour {
     public MeshFilter SetupVoxelize() {
         CleanUpVoxel();
 
-        VoxelTree = new GameObject();
-        VoxelTree.name = "Voxel Tree";
-        VoxelTree.transform.position = SCData.rootPos;
-        MeshRenderer renderer = VoxelTree.AddComponent<MeshRenderer>();
+        treeObject.SetActive(false);
+
+        voxelTree = new GameObject();
+        voxelTree.name = "Voxel Tree";
+        voxelTree.transform.position = SCData.rootPos;
+        MeshRenderer renderer = voxelTree.AddComponent<MeshRenderer>();
         renderer.material = new Material(Shader.Find("Standard"));
         renderer.material.color = SCData.branchColor;
-        MeshFilter filter = VoxelTree.AddComponent<MeshFilter>();
+        MeshFilter filter = voxelTree.AddComponent<MeshFilter>();
         filter.mesh = new Mesh();
 
         return filter;
