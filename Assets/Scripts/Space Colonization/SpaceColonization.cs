@@ -64,6 +64,7 @@ public class SpaceColonization : MonoBehaviour {
 
     public void Generate() {
         CleanUp();
+        CleanUpVoxel();
 
         //new leaves object
         treeLeaves = new GameObject();
