@@ -55,6 +55,7 @@ public class SpaceColonization : MonoBehaviour {
                 tree.show();
                 isShown = true;
                 startGen = false;
+                Debug.Log("Finished Tree Generation");
             }
         }
     }

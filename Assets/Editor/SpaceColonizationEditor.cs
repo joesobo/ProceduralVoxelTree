@@ -18,7 +18,6 @@ public class SpaceColonizationEditor : Editor {
         if (GUILayout.Button("Generate Tree", GUILayout.MaxWidth(150))) {
             Debug.Log("Generating Tree...");
             spaceColonizer.Generate();
-            Debug.Log("Finished Tree Generation");
         }
 
         if (GUILayout.Button("Voxelize Tree", GUILayout.MaxWidth(150))) {
