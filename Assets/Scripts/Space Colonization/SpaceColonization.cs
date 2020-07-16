@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class SpaceColonization : MonoBehaviour {
     private Tree tree;
-    private GameObject treeObject;
+    [HideInInspector]
+    public GameObject treeObject;
+    [HideInInspector]
+    GameObject VoxelTree;
 
     public SpaceColonizationScriptableObject SCData;
 
@@ -17,11 +20,22 @@ public class SpaceColonization : MonoBehaviour {
 
     private Material meshMaterial;
 
+    [HideInInspector]
+    public MeshFilter meshFilter;
+
     private Helper helper;
+
+    [HideInInspector]
+    public SaveMeshInEditor meshSaver;
+    public ComputeShader voxelizer;
 
     private void Start() {
         helper = new Helper();
         meshMaterial = new Material(Shader.Find("Standard"));
+
+        meshFilter = GetComponent<MeshFilter>();
+
+        meshSaver = FindObjectOfType<SaveMeshInEditor>();
     }
 
     void Update() {
@@ -46,8 +60,6 @@ public class SpaceColonization : MonoBehaviour {
     }
 
     public void Generate() {
-        Debug.Log("Generating Tree...");
-
         CleanUp();
 
         //new tree object
@@ -70,8 +82,6 @@ public class SpaceColonization : MonoBehaviour {
 
         startGen = true;
         isGenerating = true;
-
-        Debug.Log("Finished Tree Generation");
     }
 
     public void CleanUp() {
@@ -86,6 +96,10 @@ public class SpaceColonization : MonoBehaviour {
         Destroy(treeObject);
     }
 
+    public void CleanUpVoxel() {
+        Destroy(VoxelTree);
+    }
+
     public void ToggleLeaves() {
         tree.toggleLeaves();
     }
@@ -94,5 +108,20 @@ public class SpaceColonization : MonoBehaviour {
         foreach (Transform child in this.transform) {
             child.gameObject.SetActive(!child.gameObject.activeSelf);
         }
+    }
+
+    public MeshFilter SetupVoxelize() {
+        CleanUpVoxel();
+
+        VoxelTree = new GameObject();
+        VoxelTree.name = "Voxel Tree";
+        VoxelTree.transform.position = SCData.rootPos;
+        MeshRenderer renderer = VoxelTree.AddComponent<MeshRenderer>();
+        renderer.material = new Material(Shader.Find("Standard"));
+        renderer.material.color = SCData.branchColor;
+        MeshFilter filter = VoxelTree.AddComponent<MeshFilter>();
+        filter.mesh = new Mesh();
+
+        return filter;
     }
 }

@@ -423,8 +423,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7367712ed20bf4081e6be1fd803037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  treeObject: {fileID: 0}
   SCData: {fileID: 11400000, guid: 11160c977970b0540ada81ee40d913c6, type: 2}
   showLeafRef: 0
+  meshFilter: {fileID: 0}
+  meshSaver: {fileID: 0}
+  voxelizer: {fileID: 7200000, guid: 5fdfd9c0be0cd42fca24f981cc152dd4, type: 3}
 --- !u!4 &504084192
 Transform:
   m_ObjectHideFlags: 0
@@ -593,7 +597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  mesh: {fileID: 4300000, guid: 12a9add325ce5b648bf27ed56673fb06, type: 2}
+  mesh: {fileID: 0}
   voxelizer: {fileID: 7200000, guid: 5fdfd9c0be0cd42fca24f981cc152dd4, type: 3}
   resolution: 64
   useUV: 0
@@ -1086,7 +1090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2115514184
 MonoBehaviour:
   m_ObjectHideFlags: 0
