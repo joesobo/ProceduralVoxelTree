@@ -6,7 +6,7 @@ public class Tree : MonoBehaviour {
     private MeshFilter filter;
 
     public SpaceColonizationScriptableObject SCData;
-    public Transform parent;
+    public SpaceColonization parent;
 
     private List<GameObject> leaves = new List<GameObject>();
     private List<Leaf> leavesRef = new List<Leaf>();
@@ -104,7 +104,7 @@ public class Tree : MonoBehaviour {
 
         if (SCData.showLeafRef) {
             for (int i = 0; i < leavesRef.Count; i++) {
-                leavesRef[i].show(parent);
+                leavesRef[i].show(parent.transform);
             }
         }
 
@@ -182,12 +182,6 @@ public class Tree : MonoBehaviour {
         filter.mesh = treeMesh;
     }
 
-    public void toggleLeaves() {
-        foreach (Transform child in this.transform) {
-            child.gameObject.SetActive(!child.gameObject.activeSelf);
-        }
-    }
-
     public void CreateLeaves(int index) {
         Vector3 leafPos;
         Collider[] hitColliders;
@@ -218,7 +212,7 @@ public class Tree : MonoBehaviour {
 
         newLeaf.transform.position = pos;
         newLeaf.transform.localScale = Vector3.one * Random.Range(SCData.leafSize.x, SCData.leafSize.y);
-        newLeaf.transform.parent = this.transform;
+        newLeaf.transform.parent = this.parent.treeLeaves.transform;
         leaves.Add(newLeaf);
     }
 

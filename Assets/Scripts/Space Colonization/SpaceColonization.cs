@@ -7,7 +7,9 @@ public class SpaceColonization : MonoBehaviour {
     [HideInInspector]
     public GameObject treeObject;
     [HideInInspector]
-    GameObject voxelTree;
+    public GameObject voxelTree;
+    [HideInInspector]
+    public GameObject treeLeaves;
 
     public SpaceColonizationScriptableObject SCData;
 
@@ -63,6 +65,10 @@ public class SpaceColonization : MonoBehaviour {
     public void Generate() {
         CleanUp();
 
+        //new leaves object
+        treeLeaves = new GameObject();
+        treeLeaves.name = "Tree Leaves";
+
         //new tree object
         treeObject = new GameObject();
         treeObject.name = "Tree";
@@ -77,7 +83,7 @@ public class SpaceColonization : MonoBehaviour {
         //set up tree
         tree = treeObject.AddComponent<Tree>();
         tree.SCData = SCData;
-        tree.parent = this.transform;
+        tree.parent = this;
 
         tree.setup();
 
@@ -95,6 +101,8 @@ public class SpaceColonization : MonoBehaviour {
         //clean up old stuff
         helper.ClearAllChildren(this.transform);
         Destroy(treeObject);
+
+        Destroy(treeLeaves);
     }
 
     public void CleanUpVoxel() {
@@ -102,7 +110,9 @@ public class SpaceColonization : MonoBehaviour {
     }
 
     public void ToggleLeaves() {
-        tree.toggleLeaves();
+        foreach (Transform child in treeLeaves.transform) {
+            child.gameObject.SetActive(!child.gameObject.activeSelf);
+        }
     }
 
     public void ToggleActiveTree() {
