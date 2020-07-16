@@ -106,8 +106,13 @@ public class SpaceColonization : MonoBehaviour {
     }
 
     public void ToggleActiveTree() {
-        treeObject.SetActive(!treeObject.activeSelf);
-        voxelTree.SetActive(!voxelTree.activeSelf);
+        if (treeObject) {
+            treeObject.SetActive(!treeObject.activeSelf);
+        }
+        
+        if (voxelTree) {
+            voxelTree.SetActive(!voxelTree.activeSelf);
+        }
     }
 
     public void ToggleShowLeafReferences() {

@@ -60,12 +60,13 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.Space(8);
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Save to File", GUILayout.MaxWidth(150))) {
+        if (GUILayout.Button("SAVE", GUILayout.MaxWidth(150))) {
 
         }
 
-        if (GUILayout.Button("Clear Tree", GUILayout.MaxWidth(150))) {
+        if (GUILayout.Button("CLEAR", GUILayout.MaxWidth(150))) {
             spaceColonizer.CleanUp();
+            spaceColonizer.CleanUpVoxel();
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
