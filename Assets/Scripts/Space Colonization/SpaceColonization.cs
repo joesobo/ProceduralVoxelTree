@@ -54,6 +54,7 @@ public class SpaceColonization : MonoBehaviour {
             }
 
             if (!isGenerating && !isShown) {
+                tree.cleanLeaves();
                 tree.show();
                 isShown = true;
                 startGen = false;

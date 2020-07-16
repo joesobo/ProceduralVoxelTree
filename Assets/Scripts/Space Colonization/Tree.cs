@@ -182,7 +182,69 @@ public class Tree : MonoBehaviour {
         filter.mesh = treeMesh;
     }
 
-    public void CreateLeaves(int index) {
+    public void cleanLeaves() {
+        Dictionary<string, List<GameObject>> hexToLeaves = new Dictionary<string, List<GameObject>>();
+
+        //Fill in dictionary
+        foreach (Transform leaf in this.parent.treeLeaves.transform) {
+            MeshRenderer renderer = leaf.gameObject.GetComponent<MeshRenderer>();
+
+            string hex = ColorUtility.ToHtmlStringRGB(renderer.material.color);
+
+            //add to array
+            if (hexToLeaves.ContainsKey(hex)) {
+                List<GameObject> leavesList = hexToLeaves[hex];
+                leavesList.Add(leaf.gameObject);
+                hexToLeaves[hex] = leavesList;
+                //add new array
+            } else {
+                List<GameObject> newLeavesList = new List<GameObject>();
+                newLeavesList.Add(leaf.gameObject);
+                hexToLeaves.Add(hex, newLeavesList);
+            }
+        }
+
+        //use dictionary to generate new combines meshes
+        foreach (KeyValuePair<string, List<GameObject>> entry in hexToLeaves) {
+            List<GameObject> leavesList = entry.Value;
+
+            Mesh newMesh = CombineMeshes(leavesList);
+
+            GameObject combinedLeaves = new GameObject(entry.Key + " Leaves");
+            combinedLeaves.transform.parent = this.parent.treeLeaves.transform;
+
+            MeshRenderer renderer = combinedLeaves.AddComponent<MeshRenderer>();
+            renderer.material = new Material(Shader.Find("Standard"));
+            Color combinedColor;
+            if (ColorUtility.TryParseHtmlString("#" + entry.Key, out combinedColor)) {
+                renderer.material.color = combinedColor;
+            }
+
+            MeshFilter combinedMesh = combinedLeaves.AddComponent<MeshFilter>();
+            combinedMesh.mesh = newMesh;
+        }
+
+        //clear old gameobjects
+        foreach (KeyValuePair<string, List<GameObject>> entry in hexToLeaves) {
+            foreach (GameObject obj in entry.Value) {
+                Destroy(obj);
+            }
+        }
+    }
+
+    private Mesh CombineMeshes(List<GameObject> leaves) {
+        CombineInstance[] combine = new CombineInstance[leaves.Count];
+        for (int i = 0; i < leaves.Count; i++) {
+            combine[i].mesh = leaves[i].GetComponent<MeshFilter>().mesh;
+            combine[i].transform = leaves[i].transform.localToWorldMatrix;
+        }
+
+        Mesh mesh = new Mesh();
+        mesh.CombineMeshes(combine);
+        return mesh;
+    }
+
+    private void CreateLeaves(int index) {
         Vector3 leafPos;
         Collider[] hitColliders;
 
@@ -197,7 +259,7 @@ public class Tree : MonoBehaviour {
         }
     }
 
-    public void CreateLeaf(Vector3 pos) {
+    private void CreateLeaf(Vector3 pos) {
         GameObject newLeaf;
         Material leafMat;
 
