@@ -60,13 +60,14 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.Space(8);
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("SAVE", GUILayout.MaxWidth(150))) {
-
+        if (GUILayout.Button(new GUIContent("SAVE", "Careful! Change the name before save or you might overwrite the previous version"))) {
+            spaceColonizer.Save();
         }
 
-        if (GUILayout.Button("CLEAR", GUILayout.MaxWidth(150))) {
-            spaceColonizer.CleanUp();
-            spaceColonizer.CleanUpVoxel();
+        GUILayout.Space(32);
+
+        if (GUILayout.Button(new GUIContent("CLEAR", "Careful! This will delete everything"))) {
+            spaceColonizer.Clear();
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.IO;
 
 public class SpaceColonization : MonoBehaviour {
     private Tree tree;
@@ -30,6 +32,8 @@ public class SpaceColonization : MonoBehaviour {
     [HideInInspector]
     public SaveMeshInEditor meshSaver;
     public ComputeShader voxelizer;
+
+    public string saveName = "Tree";
 
     private void Start() {
         helper = new Helper();
@@ -93,7 +97,51 @@ public class SpaceColonization : MonoBehaviour {
         isGenerating = true;
     }
 
-    public void CleanUp() {
+    public void Clear() {
+        CleanUp();
+        CleanUpVoxel();
+    }
+
+    public void Save() {
+        //Tree
+        MeshFilter treeFilter = treeObject.GetComponent<MeshFilter>();
+
+        if (treeFilter) {
+            //  Assets/Meshes/Tree/Tree.asset
+            Directory.CreateDirectory("Assets/Meshes/" + saveName + "/");
+            var savePath = "Assets/Meshes/" + saveName + "/" + saveName + ".asset";
+            AssetDatabase.CreateAsset(treeFilter.mesh, savePath);
+            Debug.Log("Saved Mesh to: " + savePath);
+        }
+
+        //Voxel Tree
+        if (voxelTree) {
+            MeshFilter voxelFilter = voxelTree.GetComponent<MeshFilter>();
+
+            if (voxelFilter) {
+                //  Assets/Meshes/Tree/TreeVoxel.asset
+                var savePath = "Assets/Meshes/" + saveName + "/" + saveName + "Voxel" + ".asset";
+                AssetDatabase.CreateAsset(voxelFilter.mesh, savePath);
+                Debug.Log("Saved Mesh to: " + savePath);
+            }
+        }
+
+        //Leaves
+        int count = 0;
+        foreach (Transform child in treeLeaves.transform) {
+            MeshFilter leaves = child.gameObject.GetComponent<MeshFilter>();
+
+            if (leaves) {
+                //  Assets/Meshes/Tree/leaves0.asset
+                var savePath = "Assets/Meshes/" + saveName + "/leaves" + count + ".asset";
+                AssetDatabase.CreateAsset(leaves.mesh, savePath);
+                Debug.Log("Saved Mesh to: " + savePath);
+                count++;
+            }
+        }
+    }
+
+    private void CleanUp() {
         //reset timeout
         curTimeoutTime = 0;
         startGen = false;
@@ -107,7 +155,7 @@ public class SpaceColonization : MonoBehaviour {
         Destroy(treeLeaves);
     }
 
-    public void CleanUpVoxel() {
+    private void CleanUpVoxel() {
         Destroy(voxelTree);
     }
 
@@ -121,7 +169,7 @@ public class SpaceColonization : MonoBehaviour {
         if (treeObject) {
             treeObject.SetActive(!treeObject.activeSelf);
         }
-        
+
         if (voxelTree) {
             voxelTree.SetActive(!voxelTree.activeSelf);
         }
