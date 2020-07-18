@@ -107,8 +107,12 @@ public class SpaceColonization : MonoBehaviour {
         MeshFilter treeFilter = treeObject.GetComponent<MeshFilter>();
 
         if (treeFilter) {
+            //create save directory
+            Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Leaves");
+            Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Materials/Leaves");
+            AssetDatabase.Refresh();
+
             //  Assets/Meshes/Tree/Tree.asset
-            Directory.CreateDirectory("Assets/Meshes/" + saveName + "/");
             var savePath = "Assets/Meshes/" + saveName + "/" + saveName + ".asset";
             AssetDatabase.CreateAsset(treeFilter.mesh, savePath);
             Debug.Log("Saved Mesh to: " + savePath);
@@ -133,7 +137,7 @@ public class SpaceColonization : MonoBehaviour {
 
             if (leaves) {
                 //  Assets/Meshes/Tree/leaves0.asset
-                var savePath = "Assets/Meshes/" + saveName + "/leaves" + count + ".asset";
+                var savePath = "Assets/Meshes/" + saveName + "/Leaves/leaves" + count + ".asset";
                 AssetDatabase.CreateAsset(leaves.mesh, savePath);
                 Debug.Log("Saved Mesh to: " + savePath);
                 count++;
