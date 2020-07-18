@@ -10,7 +10,7 @@ Just a few things that I'm proud of learning and would like to highlight from my
 * Procedural generation
 * Custom editor for tree parameters
 * Scriptable objects to save tree generation data
-* Ability to save tree mesh to file
+* Ability to save tree mesh, materials, and prefab to file
 * and plenty more
 
 - - - - 
