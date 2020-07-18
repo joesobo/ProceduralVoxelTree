@@ -100,27 +100,29 @@ public class SpaceColonization : MonoBehaviour {
 
     public void save() {
         //create save directory
-        Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Leaves");
-        Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Materials/Leaves");
+        Directory.CreateDirectory("Assets/ProceduralVoxelTree/" + saveName + "/Meshes/Leaves");
+        Directory.CreateDirectory("Assets/ProceduralVoxelTree/" + saveName + "/Materials/Leaves");
+        Directory.CreateDirectory("Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/Leaves");
         AssetDatabase.Refresh();
 
         saveMeshToDir();
         saveMatToDir();
+        savePrefabToDir();
     }
 
     private void saveMeshToDir() {
         MeshFilter treeFilter = treeObject.GetComponent<MeshFilter>();
         if (treeFilter) {
-            // Assets/Meshes/Tree/Tree.asset
-            saveAsset(saveName + "/" + saveName + ".asset", treeFilter.mesh);
+            // Assets/ProceduralVoxelTree/[Name]/Meshes/[Name].asset
+            saveAsset(saveName + "/Meshes/" + saveName + ".asset", treeFilter.mesh);
         }
 
         if (voxelTree) {
             MeshFilter voxelFilter = voxelTree.GetComponent<MeshFilter>();
 
             if (voxelFilter) {
-                // Assets/Meshes/Tree/TreeVoxel.asset
-                saveAsset(saveName + "/" + saveName + "Voxel" + ".asset", voxelFilter.mesh);
+                // Assets/ProceduralVoxelTree/[Name]/Meshes/[Name]Voxel.asset
+                saveAsset(saveName + "/Meshes/" + saveName + "Voxel.asset", voxelFilter.mesh);
             }
         }
 
@@ -129,8 +131,8 @@ public class SpaceColonization : MonoBehaviour {
             MeshFilter leaves = child.gameObject.GetComponent<MeshFilter>();
 
             if (leaves) {
-                // Assets/Meshes/Tree/leaves0.asset
-                saveAsset(saveName + "/Leaves/leaves" + count + ".asset", leaves.mesh);
+                // Assets/ProceduralVoxelTree/[Name]/Meshes/Leaves/leaves0.asset
+                saveAsset(saveName + "/Meshes/Leaves/leaves" + count + ".asset", leaves.mesh);
                 count++;
             }
         }
@@ -139,7 +141,7 @@ public class SpaceColonization : MonoBehaviour {
     private void saveMatToDir() {
         MeshRenderer treeRenderer = treeObject.GetComponent<MeshRenderer>();
         if (treeRenderer) {
-            // Assets/Meshes/Tree/Materials/Tree.mat
+            // Assets/ProceduralVoxelTree/[Name]/Materials/[Name].mat
             saveAsset(saveName + "/Materials/" + saveName + ".mat", treeRenderer.material);
         }
 
@@ -147,8 +149,8 @@ public class SpaceColonization : MonoBehaviour {
             MeshRenderer voxelRenderer = voxelTree.GetComponent<MeshRenderer>();
 
             if (voxelRenderer) {
-                // Assets/Meshes/Tree/Materials/TreeVoxel.mat
-                saveAsset(saveName + "/Materials/" + saveName + "Voxel" + ".mat", voxelRenderer.material);
+                // Assets/ProceduralVoxelTree/[Name]/Materials/[Name]Voxel.mat
+                saveAsset(saveName + "/Materials/" + saveName + "Voxel.mat", voxelRenderer.material);
             }
         }
 
@@ -157,15 +159,45 @@ public class SpaceColonization : MonoBehaviour {
             MeshRenderer leavesRenderer = child.gameObject.GetComponent<MeshRenderer>();
 
             if (leavesRenderer) {
-                // Assets/Meshes/Tree/Materials/Leaves/leaves0.mat
+                // Assets/ProceduralVoxelTree/[Name]/Materials/Leaves/leaves0.mat
                 saveAsset(saveName + "/Materials/Leaves/leaves" + count + ".mat", leavesRenderer.material);
                 count++;
             }
         }
     }
 
+    private void savePrefabToDir() {
+        // Assets/ProceduralVoxelTree/[Name]/Prefabs/[Name].prefab
+        if (!treeObject.activeSelf) {
+            treeObject.SetActive(true);
+            PrefabUtility.SaveAsPrefabAsset(treeObject, "Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/" + saveName + ".prefab");
+            treeObject.SetActive(false);
+        } else {
+            PrefabUtility.SaveAsPrefabAsset(treeObject, "Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/" + saveName + ".prefab");
+        }
+
+
+        if (voxelTree) {
+            if (!voxelTree.activeSelf) {
+                voxelTree.SetActive(true);
+                PrefabUtility.SaveAsPrefabAsset(voxelTree, "Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/" + saveName + "Voxel.prefab");
+                voxelTree.SetActive(false);
+            } else {
+                PrefabUtility.SaveAsPrefabAsset(voxelTree, "Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/" + saveName + "Voxel.prefab");
+            }
+        }
+
+        if (!treeLeaves.activeSelf) {
+            treeLeaves.SetActive(true);
+            PrefabUtility.SaveAsPrefabAsset(treeLeaves, "Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/Leaves/leaves.prefab");
+            treeLeaves.SetActive(false);
+        } else {
+            PrefabUtility.SaveAsPrefabAsset(treeLeaves, "Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/Leaves/leaves.prefab");
+        }
+    }
+
     private void saveAsset(string path, Object asset) {
-        var savePath = "Assets/Meshes/" + path;
+        var savePath = "Assets/ProceduralVoxelTree/" + path;
         AssetDatabase.CreateAsset(asset, savePath);
         Debug.Log("Saved Mesh to: " + savePath);
     }
