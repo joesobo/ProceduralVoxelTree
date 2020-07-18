@@ -112,9 +112,7 @@ public class SpaceColonization : MonoBehaviour {
         MeshFilter treeFilter = treeObject.GetComponent<MeshFilter>();
         if (treeFilter) {
             // Assets/Meshes/Tree/Tree.asset
-            var savePath = "Assets/Meshes/" + saveName + "/" + saveName + ".asset";
-            AssetDatabase.CreateAsset(treeFilter.mesh, savePath);
-            Debug.Log("Saved Mesh to: " + savePath);
+            saveAsset(saveName + "/" + saveName + ".asset", treeFilter.mesh);
         }
 
         if (voxelTree) {
@@ -122,9 +120,7 @@ public class SpaceColonization : MonoBehaviour {
 
             if (voxelFilter) {
                 // Assets/Meshes/Tree/TreeVoxel.asset
-                var savePath = "Assets/Meshes/" + saveName + "/" + saveName + "Voxel" + ".asset";
-                AssetDatabase.CreateAsset(voxelFilter.mesh, savePath);
-                Debug.Log("Saved Mesh to: " + savePath);
+                saveAsset(saveName + "/" + saveName + "Voxel" + ".asset", voxelFilter.mesh);
             }
         }
 
@@ -134,9 +130,7 @@ public class SpaceColonization : MonoBehaviour {
 
             if (leaves) {
                 // Assets/Meshes/Tree/leaves0.asset
-                var savePath = "Assets/Meshes/" + saveName + "/Leaves/leaves" + count + ".asset";
-                AssetDatabase.CreateAsset(leaves.mesh, savePath);
-                Debug.Log("Saved Mesh to: " + savePath);
+                saveAsset(saveName + "/Leaves/leaves" + count + ".asset", leaves.mesh);
                 count++;
             }
         }
@@ -146,9 +140,7 @@ public class SpaceColonization : MonoBehaviour {
         MeshRenderer treeRenderer = treeObject.GetComponent<MeshRenderer>();
         if (treeRenderer) {
             // Assets/Meshes/Tree/Materials/Tree.mat
-            var savePath = "Assets/Meshes/" + saveName + "/Materials/" + saveName + ".mat";
-            AssetDatabase.CreateAsset(treeRenderer.material, savePath);
-            Debug.Log("Saved Mesh to: " + savePath);
+            saveAsset(saveName + "/Materials/" + saveName + ".mat", treeRenderer.material);
         }
 
         if (voxelTree) {
@@ -156,9 +148,7 @@ public class SpaceColonization : MonoBehaviour {
 
             if (voxelRenderer) {
                 // Assets/Meshes/Tree/Materials/TreeVoxel.mat
-                var savePath = "Assets/Meshes/" + saveName + "/Materials/" + saveName + "Voxel" + ".mat";
-                AssetDatabase.CreateAsset(voxelRenderer.material, savePath);
-                Debug.Log("Saved Mesh to: " + savePath);
+                saveAsset(saveName + "/Materials/" + saveName + "Voxel" + ".mat", voxelRenderer.material);
             }
         }
 
@@ -168,12 +158,16 @@ public class SpaceColonization : MonoBehaviour {
 
             if (leavesRenderer) {
                 // Assets/Meshes/Tree/Materials/Leaves/leaves0.mat
-                var savePath = "Assets/Meshes/" + saveName + "/Materials/Leaves/leaves" + count + ".mat";
-                AssetDatabase.CreateAsset(leavesRenderer.material, savePath);
-                Debug.Log("Saved Mesh to: " + savePath);
+                saveAsset(saveName + "/Materials/Leaves/leaves" + count + ".mat", leavesRenderer.material);
                 count++;
             }
         }
+    }
+
+    private void saveAsset(string path, Object asset) {
+        var savePath = "Assets/Meshes/" + path;
+        AssetDatabase.CreateAsset(asset, savePath);
+        Debug.Log("Saved Mesh to: " + savePath);
     }
 
     private void cleanUp() {
