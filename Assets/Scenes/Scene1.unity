@@ -431,7 +431,7 @@ MonoBehaviour:
   meshFilter: {fileID: 0}
   meshSaver: {fileID: 0}
   voxelizer: {fileID: 7200000, guid: 5fdfd9c0be0cd42fca24f981cc152dd4, type: 3}
-  saveName: Tree
+  saveName: CherryBlossomTree
 --- !u!4 &504084192
 Transform:
   m_ObjectHideFlags: 0

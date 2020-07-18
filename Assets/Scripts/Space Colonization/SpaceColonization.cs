@@ -103,42 +103,77 @@ public class SpaceColonization : MonoBehaviour {
     }
 
     public void Save() {
-        //Tree
+        //create save directory
+        Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Leaves");
+        Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Materials/Leaves");
+        AssetDatabase.Refresh();
+
+        SaveMeshToDir();
+        SaveMatToDir();
+    }
+
+    private void SaveMeshToDir() {
         MeshFilter treeFilter = treeObject.GetComponent<MeshFilter>();
-
         if (treeFilter) {
-            //create save directory
-            Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Leaves");
-            Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Materials/Leaves");
-            AssetDatabase.Refresh();
-
-            //  Assets/Meshes/Tree/Tree.asset
+            // Assets/Meshes/Tree/Tree.asset
             var savePath = "Assets/Meshes/" + saveName + "/" + saveName + ".asset";
             AssetDatabase.CreateAsset(treeFilter.mesh, savePath);
             Debug.Log("Saved Mesh to: " + savePath);
         }
 
-        //Voxel Tree
         if (voxelTree) {
             MeshFilter voxelFilter = voxelTree.GetComponent<MeshFilter>();
 
             if (voxelFilter) {
-                //  Assets/Meshes/Tree/TreeVoxel.asset
+                // Assets/Meshes/Tree/TreeVoxel.asset
                 var savePath = "Assets/Meshes/" + saveName + "/" + saveName + "Voxel" + ".asset";
                 AssetDatabase.CreateAsset(voxelFilter.mesh, savePath);
                 Debug.Log("Saved Mesh to: " + savePath);
             }
         }
 
-        //Leaves
         int count = 0;
         foreach (Transform child in treeLeaves.transform) {
             MeshFilter leaves = child.gameObject.GetComponent<MeshFilter>();
 
             if (leaves) {
-                //  Assets/Meshes/Tree/leaves0.asset
+                // Assets/Meshes/Tree/leaves0.asset
                 var savePath = "Assets/Meshes/" + saveName + "/Leaves/leaves" + count + ".asset";
                 AssetDatabase.CreateAsset(leaves.mesh, savePath);
+                Debug.Log("Saved Mesh to: " + savePath);
+                count++;
+            }
+        }
+    }
+
+    private void SaveMatToDir() {
+        MeshRenderer treeRenderer = treeObject.GetComponent<MeshRenderer>();
+        if (treeRenderer) {
+            // Assets/Meshes/Tree/Materials/Tree.mat
+            var savePath = "Assets/Meshes/" + saveName + "/Materials/" + saveName + ".mat";
+            AssetDatabase.CreateAsset(treeRenderer.material, savePath);
+            Debug.Log("Saved Mesh to: " + savePath);
+        }
+
+        if (voxelTree) {
+            MeshRenderer voxelRenderer = voxelTree.GetComponent<MeshRenderer>();
+
+            if (voxelRenderer) {
+                // Assets/Meshes/Tree/Materials/TreeVoxel.mat
+                var savePath = "Assets/Meshes/" + saveName + "/Materials/" + saveName + "Voxel" + ".mat";
+                AssetDatabase.CreateAsset(voxelRenderer.material, savePath);
+                Debug.Log("Saved Mesh to: " + savePath);
+            }
+        }
+
+        int count = 0;
+        foreach (Transform child in treeLeaves.transform) {
+            MeshRenderer leavesRenderer = child.gameObject.GetComponent<MeshRenderer>();
+
+            if (leavesRenderer) {
+                // Assets/Meshes/Tree/Materials/Leaves/leaves0.mat
+                var savePath = "Assets/Meshes/" + saveName + "/Materials/Leaves/leaves" + count + ".mat";
+                AssetDatabase.CreateAsset(leavesRenderer.material, savePath);
                 Debug.Log("Saved Mesh to: " + savePath);
                 count++;
             }
