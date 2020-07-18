@@ -176,7 +176,7 @@ public class SpaceColonization : MonoBehaviour {
             PrefabUtility.SaveAsPrefabAsset(treeObject, "Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/" + saveName + ".prefab");
         }
 
-
+        // Assets/ProceduralVoxelTree/[Name]/Prefabs/[Name]Voxel.prefab
         if (voxelTree) {
             if (!voxelTree.activeSelf) {
                 voxelTree.SetActive(true);
@@ -187,6 +187,7 @@ public class SpaceColonization : MonoBehaviour {
             }
         }
 
+        // Assets/ProceduralVoxelTree/[Name]/Prefabs/Leaves/[Name].prefab
         if (!treeLeaves.activeSelf) {
             treeLeaves.SetActive(true);
             PrefabUtility.SaveAsPrefabAsset(treeLeaves, "Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/Leaves/leaves.prefab");
