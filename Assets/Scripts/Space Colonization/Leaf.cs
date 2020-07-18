@@ -28,7 +28,7 @@ public class Leaf : MonoBehaviour {
         objectRef.transform.parent = parent;
     }
 
-    public void RemoveLeafRef() {
+    public void removeLeafRef() {
         Destroy(objectRef);
     }
 }

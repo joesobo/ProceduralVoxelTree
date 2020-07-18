@@ -77,10 +77,10 @@ public class Tree : MonoBehaviour {
         for (int i = leavesRef.Count - 1; i >= 0; i--) {
             if (leavesRef[i].reached) {
                 //Create new leaf
-                CreateLeaves(i);
+                createLeaves(i);
 
                 //Remove reference
-                leavesRef[i].RemoveLeafRef();
+                leavesRef[i].removeLeafRef();
                 leavesRef.RemoveAt(i);
             }
         }
@@ -208,7 +208,7 @@ public class Tree : MonoBehaviour {
         foreach (KeyValuePair<string, List<GameObject>> entry in hexToLeaves) {
             List<GameObject> leavesList = entry.Value;
 
-            Mesh newMesh = CombineMeshes(leavesList);
+            Mesh newMesh = combineMeshes(leavesList);
 
             GameObject combinedLeaves = new GameObject(entry.Key + " Leaves");
             combinedLeaves.transform.parent = this.parent.treeLeaves.transform;
@@ -232,7 +232,7 @@ public class Tree : MonoBehaviour {
         }
     }
 
-    private Mesh CombineMeshes(List<GameObject> leaves) {
+    private Mesh combineMeshes(List<GameObject> leaves) {
         CombineInstance[] combine = new CombineInstance[leaves.Count];
         for (int i = 0; i < leaves.Count; i++) {
             combine[i].mesh = leaves[i].GetComponent<MeshFilter>().mesh;
@@ -244,7 +244,7 @@ public class Tree : MonoBehaviour {
         return mesh;
     }
 
-    private void CreateLeaves(int index) {
+    private void createLeaves(int index) {
         Vector3 leafPos;
         Collider[] hitColliders;
 
@@ -253,13 +253,13 @@ public class Tree : MonoBehaviour {
             hitColliders = Physics.OverlapSphere(leafPos, SCData.leafSpread);
 
             if (hitColliders.Length == 0) {
-                CreateLeaf(leafPos);
+                createLeaf(leafPos);
                 Physics.SyncTransforms();
             }
         }
     }
 
-    private void CreateLeaf(Vector3 pos) {
+    private void createLeaf(Vector3 pos) {
         GameObject newLeaf;
         Material leafMat;
 
@@ -268,7 +268,7 @@ public class Tree : MonoBehaviour {
 
         leafMat = new Material(Shader.Find("Standard"));
 
-        leafMat.color = RandomColorHueBased();
+        leafMat.color = randomColorHueBased();
 
         newLeaf.GetComponent<MeshRenderer>().material = leafMat;
 
@@ -278,7 +278,7 @@ public class Tree : MonoBehaviour {
         leaves.Add(newLeaf);
     }
 
-    public Color RandomColorHueBased() {
+    public Color randomColorHueBased() {
         return SCData.leafColors[Random.Range(0, SCData.leafColors.Count - 1)];
     }
 }

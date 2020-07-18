@@ -59,9 +59,9 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     [HideInInspector]
     public bool showLeafRef;
 
-    public void GenerateColors() {
+    public void generateColors() {
         Debug.Log("Generating Colors...");
         colorHelper = new ColorHelper();
-        leafColors = colorHelper.Generate(inputColors, useReducedSubset, sublistLength);
+        leafColors = colorHelper.generate(inputColors, useReducedSubset, sublistLength);
     }
 }

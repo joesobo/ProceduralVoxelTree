@@ -59,7 +59,7 @@ public class LSystem : MonoBehaviour {
         sentence = nextSentence;
         textDisplay.text = "Sentence: " + sentence;
 
-        helper.ClearAllChildren(this.transform);
+        helper.clearAllChildren(this.transform);
 
         turtle();
     }
@@ -75,7 +75,7 @@ public class LSystem : MonoBehaviour {
             string current = "" + sentence[i];
 
             if (current == "F") {
-                helper.DrawLine(startPoint, startPoint + (heading * lineLength), this.transform, lineMaterial, lineWidth);
+                helper.drawLine(startPoint, startPoint + (heading * lineLength), this.transform, lineMaterial, lineWidth);
                 startPoint += heading * lineLength;
             } else if (current == "+") {
                 heading = Quaternion.Euler(0, 0, angle) * heading;

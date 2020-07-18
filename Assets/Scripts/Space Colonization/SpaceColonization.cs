@@ -67,9 +67,9 @@ public class SpaceColonization : MonoBehaviour {
         }
     }
 
-    public void Generate() {
-        CleanUp();
-        CleanUpVoxel();
+    public void generate() {
+        cleanUp();
+        cleanUpVoxel();
 
         //new leaves object
         treeLeaves = new GameObject();
@@ -97,22 +97,22 @@ public class SpaceColonization : MonoBehaviour {
         isGenerating = true;
     }
 
-    public void Clear() {
-        CleanUp();
-        CleanUpVoxel();
+    public void clear() {
+        cleanUp();
+        cleanUpVoxel();
     }
 
-    public void Save() {
+    public void save() {
         //create save directory
         Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Leaves");
         Directory.CreateDirectory("Assets/Meshes/" + saveName + "/Materials/Leaves");
         AssetDatabase.Refresh();
 
-        SaveMeshToDir();
-        SaveMatToDir();
+        saveMeshToDir();
+        saveMatToDir();
     }
 
-    private void SaveMeshToDir() {
+    private void saveMeshToDir() {
         MeshFilter treeFilter = treeObject.GetComponent<MeshFilter>();
         if (treeFilter) {
             // Assets/Meshes/Tree/Tree.asset
@@ -146,7 +146,7 @@ public class SpaceColonization : MonoBehaviour {
         }
     }
 
-    private void SaveMatToDir() {
+    private void saveMatToDir() {
         MeshRenderer treeRenderer = treeObject.GetComponent<MeshRenderer>();
         if (treeRenderer) {
             // Assets/Meshes/Tree/Materials/Tree.mat
@@ -180,7 +180,7 @@ public class SpaceColonization : MonoBehaviour {
         }
     }
 
-    private void CleanUp() {
+    private void cleanUp() {
         //reset timeout
         curTimeoutTime = 0;
         startGen = false;
@@ -188,23 +188,23 @@ public class SpaceColonization : MonoBehaviour {
         isShown = false;
 
         //clean up old stuff
-        helper.ClearAllChildren(this.transform);
+        helper.clearAllChildren(this.transform);
         Destroy(treeObject);
 
         Destroy(treeLeaves);
     }
 
-    private void CleanUpVoxel() {
+    private void cleanUpVoxel() {
         Destroy(voxelTree);
     }
 
-    public void ToggleLeaves() {
+    public void toggleLeaves() {
         foreach (Transform child in treeLeaves.transform) {
             child.gameObject.SetActive(!child.gameObject.activeSelf);
         }
     }
 
-    public void ToggleActiveTree() {
+    public void toggleActiveTree() {
         if (treeObject) {
             treeObject.SetActive(!treeObject.activeSelf);
         }
@@ -214,14 +214,14 @@ public class SpaceColonization : MonoBehaviour {
         }
     }
 
-    public void ToggleShowLeafReferences() {
+    public void toggleShowLeafReferences() {
         foreach (Transform child in this.transform) {
             child.gameObject.SetActive(!child.gameObject.activeSelf);
         }
     }
 
-    public MeshFilter SetupVoxelize() {
-        CleanUpVoxel();
+    public MeshFilter setupVoxelize() {
+        cleanUpVoxel();
 
         treeObject.SetActive(false);
 

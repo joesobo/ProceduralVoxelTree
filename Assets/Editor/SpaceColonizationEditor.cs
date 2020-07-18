@@ -17,12 +17,12 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Generate Tree", GUILayout.MaxWidth(150))) {
             Debug.Log("Generating Tree...");
-            spaceColonizer.Generate();
+            spaceColonizer.generate();
         }
 
         if (GUILayout.Button("Voxelize Tree", GUILayout.MaxWidth(150))) {
             Debug.Log("Voxelizing...");
-            MeshFilter voxelFilter = spaceColonizer.SetupVoxelize();
+            MeshFilter voxelFilter = spaceColonizer.setupVoxelize();
 
             var data = GPUVoxelizer.Voxelize(
                 spaceColonizer.voxelizer, 
@@ -41,7 +41,7 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Toggle Active Tree", GUILayout.MaxWidth(303))) {
-            spaceColonizer.ToggleActiveTree();
+            spaceColonizer.toggleActiveTree();
         }
 
         GUILayout.FlexibleSpace();
@@ -51,7 +51,7 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Toggle Leaves", GUILayout.MaxWidth(303))) {
-            spaceColonizer.ToggleLeaves();
+            spaceColonizer.toggleLeaves();
         }
 
         GUILayout.FlexibleSpace();
@@ -61,13 +61,13 @@ public class SpaceColonizationEditor : Editor {
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         if (GUILayout.Button(new GUIContent("SAVE", "Careful! Change the name before save or you might overwrite the previous version"))) {
-            spaceColonizer.Save();
+            spaceColonizer.save();
         }
 
         GUILayout.Space(32);
 
         if (GUILayout.Button(new GUIContent("CLEAR", "Careful! This will delete everything"))) {
-            spaceColonizer.Clear();
+            spaceColonizer.clear();
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
