@@ -29,8 +29,6 @@ public class SpaceColonization : MonoBehaviour {
 
     private Helper helper;
 
-    [HideInInspector]
-    public SaveMeshInEditor meshSaver;
     public ComputeShader voxelizer;
 
     public string saveName = "Tree";
@@ -40,8 +38,6 @@ public class SpaceColonization : MonoBehaviour {
         meshMaterial = new Material(Shader.Find("Standard"));
 
         meshFilter = GetComponent<MeshFilter>();
-
-        meshSaver = FindObjectOfType<SaveMeshInEditor>();
     }
 
     void Update() {

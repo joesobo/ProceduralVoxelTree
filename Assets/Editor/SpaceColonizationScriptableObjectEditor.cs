@@ -13,7 +13,7 @@ public class SpaceColonizationScriptableObjectEditor : Editor {
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Generate Leaf Colors", GUILayout.MaxWidth(305))) {
-            spaceColonizerData.GenerateColors();
+            spaceColonizerData.generateColors();
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
