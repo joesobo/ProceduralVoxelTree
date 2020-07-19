@@ -59,6 +59,7 @@ public class SpaceColonization : MonoBehaviour {
                 isShown = true;
                 startGen = false;
                 Debug.Log("Finished Tree Generation");
+                setScale();
             }
         }
     }
@@ -244,7 +245,8 @@ public class SpaceColonization : MonoBehaviour {
 
         voxelTree = new GameObject();
         voxelTree.name = "Voxel Tree";
-        voxelTree.transform.position = SCData.rootPos;
+        voxelTree.transform.position = SCData.rootPos * SCData.scaleFactor;
+        voxelTree.transform.localScale = SCData.scaleFactor * Vector3.one;
         MeshRenderer renderer = voxelTree.AddComponent<MeshRenderer>();
         renderer.material = new Material(Shader.Find("Standard"));
         renderer.material.color = SCData.branchColor;
@@ -252,5 +254,11 @@ public class SpaceColonization : MonoBehaviour {
         filter.mesh = new Mesh();
 
         return filter;
+    }
+
+    public void setScale() {
+        treeObject.transform.localScale = SCData.scaleFactor * Vector3.one;
+        treeObject.transform.position *= SCData.scaleFactor;
+        treeLeaves.transform.localScale = SCData.scaleFactor * Vector3.one;
     }
 }

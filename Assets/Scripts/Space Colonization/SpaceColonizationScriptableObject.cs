@@ -44,6 +44,7 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     public float maxTimeoutTime = 1;
 
     [Header("Mesh Generation")]
+    public float scaleFactor = 1;
     [Range(0.5f, 4)]
     [Tooltip("Thickness factor of branches")]
     public float invertedGrowth = 1.5f;
