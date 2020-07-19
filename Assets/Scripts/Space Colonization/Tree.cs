@@ -235,6 +235,8 @@ public class Tree : MonoBehaviour {
             renderer.material.SetColor("_Tint", combinedColor);
             renderer.material.SetVector("_wind_dir", SCData.windDirection);
             renderer.material.SetInt("_wind_size", SCData.windSize);
+            renderer.material.SetFloat("_tree_sway_stutter_influence", SCData.swayStutterInfluence);
+            renderer.material.SetFloat("_tree_sway_stutter", SCData.swayStutter);
             renderer.material.SetFloat("_tree_sway_speed", SCData.swaySpeed);
             renderer.material.SetFloat("_tree_sway_disp", SCData.swapDisplacement);
             renderer.material.SetFloat("_branches_disp", 0);

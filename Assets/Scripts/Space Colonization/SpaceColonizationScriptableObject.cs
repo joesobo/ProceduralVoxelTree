@@ -12,12 +12,12 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
 
     [Header("Leaf Attributes")]
     public Vector2 leafSize = new Vector2(10, 20);
-    [Range(0,50)]
+    [Range(0, 50)]
     [Tooltip("Radius from node that leaves can spawn")]
     public float leafSpawnRadius = 1;
     [Range(1, 10)]
     public int numLeavesPerNode = 1;
-    [Range(0,75)]
+    [Range(0, 75)]
     [Tooltip("Distance between each leaf")]
     public float leafSpread = 1;
 
@@ -57,14 +57,17 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
 
     [Header("Wind Shader")]
     public Vector3 windDirection = new Vector3(0.5f, 0.05f, 0.5f);
-    [Range(5,50)]
+    [Range(5, 50)]
     public int windSize = 15;
-    [Range(0,10)]
+    [Range(0, 1)]
+    public float swayStutterInfluence = 0.2f;
+    [Range(0, 10)]
+    public float swayStutter = 1.5f;
+    [Range(0, 10)]
     public float swaySpeed = 1;
-    [Range(0,1)]
+    [Range(0, 1)]
     public float swapDisplacement = 0.3f;
     public float leafWiggleDisplacement = 0.07f;
-    [Range(0, 0.1f)]
     public float leafWiggleSpeed = 0.015f;
 
     public void generateColors() {
