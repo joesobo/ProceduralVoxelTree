@@ -33,6 +33,8 @@ public class SpaceColonization : MonoBehaviour {
 
     public ComputeShader voxelizer;
 
+    public GameObject particlePrefab;
+
     public string saveName = "Tree";
 
     private void Start() {

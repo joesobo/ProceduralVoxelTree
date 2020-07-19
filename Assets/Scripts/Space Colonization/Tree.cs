@@ -204,7 +204,7 @@ public class Tree : MonoBehaviour {
             }
         }
 
-        //use dictionary to generate new combines meshes
+        //use dictionary to generate new combined meshes
         foreach (KeyValuePair<string, List<GameObject>> entry in hexToLeaves) {
             List<GameObject> leavesList = entry.Value;
 
@@ -213,9 +213,10 @@ public class Tree : MonoBehaviour {
             GameObject combinedLeaves = new GameObject(entry.Key + " Leaves");
             combinedLeaves.transform.parent = this.parent.treeLeaves.transform;
 
-            MeshRenderer renderer = combinedLeaves.AddComponent<MeshRenderer>();
-            renderer.material = new Material(Shader.Find("Polygon Wind/Tree"));
+            MeshRenderer renderer = combinedLeaves.AddComponent<MeshRenderer>();            
             setupLeafMaterial(renderer, entry.Key);
+
+            addColoredParticle(combinedLeaves, renderer.material);
 
             MeshFilter combinedMesh = combinedLeaves.AddComponent<MeshFilter>();
             combinedMesh.mesh = newMesh;
@@ -230,6 +231,8 @@ public class Tree : MonoBehaviour {
     }
 
     private void setupLeafMaterial(MeshRenderer renderer, string key) {
+        renderer.material = new Material(Shader.Find("Polygon Wind/Tree"));
+
         Color combinedColor;
         if (ColorUtility.TryParseHtmlString("#" + key, out combinedColor)) {
             renderer.material.SetColor("_Tint", combinedColor);
@@ -243,6 +246,11 @@ public class Tree : MonoBehaviour {
             renderer.material.SetFloat("_leaves_wiggle_disp", SCData.leafWiggleDisplacement);
             renderer.material.SetFloat("_leaves_wiggle_speed", SCData.leafWiggleSpeed);
         }
+    }
+
+    private void addColoredParticle(GameObject parent, Material mat) {
+        GameObject particles = Instantiate(this.parent.particlePrefab, Vector3.zero, Quaternion.identity, parent.transform);
+        particles.GetComponent<ParticleSystemRenderer>().material = mat;
     }
 
     private Mesh combineMeshes(List<GameObject> leaves) {
