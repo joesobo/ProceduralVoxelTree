@@ -28,6 +28,7 @@ public class SpaceColonization : MonoBehaviour {
     public MeshFilter meshFilter;
 
     private Helper helper;
+    private SaveHelper saveHelper;
 
     public ComputeShader voxelizer;
 
@@ -35,6 +36,7 @@ public class SpaceColonization : MonoBehaviour {
 
     private void Start() {
         helper = new Helper();
+        saveHelper = new SaveHelper();
         meshMaterial = new Material(Shader.Find("Standard"));
 
         meshFilter = GetComponent<MeshFilter>();
@@ -106,96 +108,9 @@ public class SpaceColonization : MonoBehaviour {
         Directory.CreateDirectory("Assets/ProceduralVoxelTree/" + saveName + "/Prefabs/Leaves");
         AssetDatabase.Refresh();
 
-        saveMeshToDir();
-        saveMatToDir();
-        savePrefabToDir();
-    }
-
-    private void saveMeshToDir() {
-        MeshFilter treeFilter = treeObject.GetComponent<MeshFilter>();
-        if (treeFilter) {
-            // Assets/ProceduralVoxelTree/[Name]/Meshes/[Name].asset
-            saveAsset("/Meshes/" + saveName + ".asset", treeFilter.mesh);
-        }
-
-        if (voxelTree) {
-            MeshFilter voxelFilter = voxelTree.GetComponent<MeshFilter>();
-
-            if (voxelFilter) {
-                // Assets/ProceduralVoxelTree/[Name]/Meshes/[Name]Voxel.asset
-                saveAsset("/Meshes/" + saveName + "Voxel.asset", voxelFilter.mesh);
-            }
-        }
-
-        int count = 0;
-        foreach (Transform child in treeLeaves.transform) {
-            MeshFilter leaves = child.gameObject.GetComponent<MeshFilter>();
-
-            if (leaves) {
-                // Assets/ProceduralVoxelTree/[Name]/Meshes/Leaves/leaves0.asset
-                saveAsset("/Meshes/Leaves/leaves" + count + ".asset", leaves.mesh);
-                count++;
-            }
-        }
-    }
-
-    private void saveMatToDir() {
-        MeshRenderer treeRenderer = treeObject.GetComponent<MeshRenderer>();
-        if (treeRenderer) {
-            // Assets/ProceduralVoxelTree/[Name]/Materials/[Name].mat
-            saveAsset("/Materials/" + saveName + ".mat", treeRenderer.material);
-        }
-
-        if (voxelTree) {
-            MeshRenderer voxelRenderer = voxelTree.GetComponent<MeshRenderer>();
-
-            if (voxelRenderer) {
-                // Assets/ProceduralVoxelTree/[Name]/Materials/[Name]Voxel.mat
-                saveAsset("/Materials/" + saveName + "Voxel.mat", voxelRenderer.material);
-            }
-        }
-
-        int count = 0;
-        foreach (Transform child in treeLeaves.transform) {
-            MeshRenderer leavesRenderer = child.gameObject.GetComponent<MeshRenderer>();
-
-            if (leavesRenderer) {
-                // Assets/ProceduralVoxelTree/[Name]/Materials/Leaves/leaves0.mat
-                saveAsset("/Materials/Leaves/leaves" + count + ".mat", leavesRenderer.material);
-                count++;
-            }
-        }
-    }
-
-    private void savePrefabToDir() {
-        // Assets/ProceduralVoxelTree/[Name]/Prefabs/[Name].prefab
-        savePrefab("/Prefabs/" + saveName + ".prefab", treeObject);
-
-        // Assets/ProceduralVoxelTree/[Name]/Prefabs/[Name]Voxel.prefab
-        if (voxelTree) {
-            savePrefab("/Prefabs/" + saveName + "Voxel.prefab", voxelTree);
-        }
-
-        // Assets/ProceduralVoxelTree/[Name]/Prefabs/Leaves/[Name].prefab
-        savePrefab("/Prefabs/Leaves/leaves.prefab", treeLeaves);
-    }
-
-    private void saveAsset(string path, Object asset) {
-        var savePath = "Assets/ProceduralVoxelTree/" + saveName + path;
-        AssetDatabase.CreateAsset(asset, savePath);
-        Debug.Log("Saved Asset to: " + savePath);
-    }
-
-    private void savePrefab(string path, GameObject asset) {
-        var savePath = "Assets/ProceduralVoxelTree/" + saveName + path;
-        if (!asset.activeSelf) {
-            asset.SetActive(true);
-            PrefabUtility.SaveAsPrefabAsset(asset, savePath);
-            asset.SetActive(false);
-        } else {
-            PrefabUtility.SaveAsPrefabAsset(asset, savePath);
-        }
-        Debug.Log("Saved Prefab to: " + savePath);
+        saveHelper.saveMeshToDir(saveName, treeObject, voxelTree, treeLeaves);
+        saveHelper.saveMatToDir(saveName, treeObject, voxelTree, treeLeaves);
+        saveHelper.savePrefabToDir(saveName, treeObject, voxelTree, treeLeaves);
     }
 
     private void cleanUp() {
