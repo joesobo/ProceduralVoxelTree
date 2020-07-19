@@ -21,7 +21,7 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     [Range(0,50)]
     [Tooltip("Radius from node that leaves can spawn")]
     public float leafSpawnRadius = 1;
-    [Range(1, 5)]
+    [Range(1, 10)]
     public int numLeavesPerNode = 1;
     [Range(0,75)]
     [Tooltip("Distance between each leaf")]
