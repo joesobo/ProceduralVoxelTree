@@ -4,12 +4,6 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "SpaceColonizationData", menuName = "SpaceColonization/SpaceColonizationScriptableObject")]
 public class SpaceColonizationScriptableObject : ScriptableObject {
-    [HideInInspector]
-    public enum LeafRefShape {
-        Sphere,
-        Cube
-    }
-
     [Header("Leaf Colors")]
     public List<ProceduralColor> inputColors;
     public List<Color> leafColors = new List<Color>();
@@ -35,9 +29,10 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     [Header("Space Colonization Attributes")]
     public Vector3 rootPos = new Vector3(0, -200, 0);
     public int numLeafRef = 500;
-    public int leafRefSpawnSize = 200;
+    public float leafRefSpawnSize = 200;
     public Vector3 leafRefOffset = Vector3.zero;
-    public LeafRefShape leafRefShape = LeafRefShape.Sphere;
+    public Mesh leafRefShapeMesh;
+    public bool isConvexMesh = false;
     [Tooltip("Min and Max distance to check for node when spawning branches")]
     public Vector2 branchDist = new Vector2(10f, 100f);
     [Tooltip("Amount of time before algorithm stops spawning")]

@@ -128,10 +128,9 @@ public class SpaceColonization : MonoBehaviour {
         isShown = false;
 
         //clean up old stuff
-        helper.clearAllChildren(this.transform);
         Destroy(treeObject);
-
         Destroy(treeLeaves);
+        helper.clearAllChildren(this.transform);
     }
 
     private void cleanUpVoxel() {
@@ -185,11 +184,7 @@ public class SpaceColonization : MonoBehaviour {
     }
 
     void OnDrawGizmosSelected() {
-        Gizmos.color = new Color(0, 0, 0.75f, 0.5f);
-        if (SCData.leafRefShape == SpaceColonizationScriptableObject.LeafRefShape.Sphere) {
-            Gizmos.DrawSphere(SCData.leafRefOffset, SCData.leafRefSpawnSize);
-        } else {
-            Gizmos.DrawCube(Vector3.zero, Vector3.one * SCData.leafRefSpawnSize * 2);
-        }
+        Gizmos.color = new Color(0, 0, 1f, 0.15f);
+        Gizmos.DrawMesh(SCData.leafRefShapeMesh, -1, SCData.leafRefOffset, Quaternion.identity, Vector3.one * SCData.leafRefSpawnSize);
     }
 }

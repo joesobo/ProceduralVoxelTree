@@ -12,12 +12,11 @@ public class Leaf : MonoBehaviour {
     public Leaf(SpaceColonizationScriptableObject SCData) {
         this.SCData = SCData;
 
-        if (SCData.leafRefShape == SpaceColonizationScriptableObject.LeafRefShape.Sphere) {
-            this.position = Random.insideUnitSphere * SCData.leafRefSpawnSize + SCData.leafRefOffset;
-        } else{
-            this.position = new Vector3(Random.Range(-SCData.leafRefSpawnSize, SCData.leafRefSpawnSize), 
-                                        Random.Range(-SCData.leafRefSpawnSize, SCData.leafRefSpawnSize),
-                                        Random.Range(-SCData.leafRefSpawnSize, SCData.leafRefSpawnSize));
+        //find point within mesh
+        if (SCData.isConvexMesh) {
+            this.position = (SelectRandomMeshPoints.GetRandomPointInsideConvex(SCData.leafRefShapeMesh) * SCData.leafRefSpawnSize) + SCData.leafRefOffset;
+        } else {
+            this.position = (SelectRandomMeshPoints.GetRandomPointInsideNonConvex(SCData.leafRefShapeMesh, SCData.leafRefOffset) * SCData.leafRefSpawnSize);
         }
     }
 
