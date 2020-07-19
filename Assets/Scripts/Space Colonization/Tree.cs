@@ -189,7 +189,7 @@ public class Tree : MonoBehaviour {
         foreach (Transform leaf in this.parent.treeLeaves.transform) {
             MeshRenderer renderer = leaf.gameObject.GetComponent<MeshRenderer>();
 
-            string hex = ColorUtility.ToHtmlStringRGB(renderer.material.color);
+            string hex = ColorUtility.ToHtmlStringRGB(renderer.material.GetColor("_Tint"));
 
             //add to array
             if (hexToLeaves.ContainsKey(hex)) {
@@ -214,11 +214,8 @@ public class Tree : MonoBehaviour {
             combinedLeaves.transform.parent = this.parent.treeLeaves.transform;
 
             MeshRenderer renderer = combinedLeaves.AddComponent<MeshRenderer>();
-            renderer.material = new Material(Shader.Find("Standard"));
-            Color combinedColor;
-            if (ColorUtility.TryParseHtmlString("#" + entry.Key, out combinedColor)) {
-                renderer.material.color = combinedColor;
-            }
+            renderer.material = new Material(Shader.Find("Polygon Wind/Tree"));
+            setupLeafMaterial(renderer, entry.Key);
 
             MeshFilter combinedMesh = combinedLeaves.AddComponent<MeshFilter>();
             combinedMesh.mesh = newMesh;
@@ -229,6 +226,20 @@ public class Tree : MonoBehaviour {
             foreach (GameObject obj in entry.Value) {
                 Destroy(obj);
             }
+        }
+    }
+
+    private void setupLeafMaterial(MeshRenderer renderer, string key) {
+        Color combinedColor;
+        if (ColorUtility.TryParseHtmlString("#" + key, out combinedColor)) {
+            renderer.material.SetColor("_Tint", combinedColor);
+            renderer.material.SetVector("_wind_dir", SCData.windDirection);
+            renderer.material.SetInt("_wind_size", SCData.windSize);
+            renderer.material.SetFloat("_tree_sway_speed", SCData.swaySpeed);
+            renderer.material.SetFloat("_tree_sway_disp", SCData.swapDisplacement);
+            renderer.material.SetFloat("_branches_disp", 0);
+            renderer.material.SetFloat("_leaves_wiggle_disp", SCData.leafWiggleDisplacement);
+            renderer.material.SetFloat("_leaves_wiggle_speed", SCData.leafWiggleSpeed);
         }
     }
 
@@ -266,9 +277,9 @@ public class Tree : MonoBehaviour {
         newLeaf = GameObject.CreatePrimitive(PrimitiveType.Cube);
         newLeaf.name = "Leaf";
 
-        leafMat = new Material(Shader.Find("Standard"));
+        leafMat = new Material(Shader.Find("Polygon Wind/Tree"));
 
-        leafMat.color = randomColorHueBased();
+        leafMat.SetColor("_Tint", randomColorHueBased());
 
         newLeaf.GetComponent<MeshRenderer>().material = leafMat;
 

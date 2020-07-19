@@ -55,6 +55,18 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     [HideInInspector]
     public bool showLeafRef;
 
+    [Header("Wind Shader")]
+    public Vector3 windDirection = new Vector3(0.5f, 0.05f, 0.5f);
+    [Range(5,50)]
+    public int windSize = 15;
+    [Range(0,10)]
+    public float swaySpeed = 1;
+    [Range(0,1)]
+    public float swapDisplacement = 0.3f;
+    public float leafWiggleDisplacement = 0.07f;
+    [Range(0, 0.1f)]
+    public float leafWiggleSpeed = 0.015f;
+
     public void generateColors() {
         Debug.Log("Generating Colors...");
         colorHelper = new ColorHelper();

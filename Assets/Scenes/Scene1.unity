@@ -587,7 +587,7 @@ MonoBehaviour:
   treeObject: {fileID: 0}
   voxelTree: {fileID: 0}
   treeLeaves: {fileID: 0}
-  SCData: {fileID: 11400000, guid: 78b9312b4ae90d14fac8293493b4e9db, type: 2}
+  SCData: {fileID: 11400000, guid: 74bc8052997c3b247aa870cf9ba962cd, type: 2}
   showLeafRef: 1
   meshFilter: {fileID: 0}
   voxelizer: {fileID: 7200000, guid: 5fdfd9c0be0cd42fca24f981cc152dd4, type: 3}
