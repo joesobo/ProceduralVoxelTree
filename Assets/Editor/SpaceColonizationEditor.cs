@@ -22,16 +22,7 @@ public class SpaceColonizationEditor : Editor {
 
         if (GUILayout.Button("Voxelize Tree", GUILayout.MaxWidth(150))) {
             Debug.Log("Voxelizing...");
-            MeshFilter voxelFilter = spaceColonizer.setupVoxelize();
-
-            var data = GPUVoxelizer.Voxelize(
-                spaceColonizer.voxelizer, 
-                spaceColonizer.treeObject.GetComponent<MeshFilter>().mesh, 
-                spaceColonizer.SCData.resolution, 
-                true);
-			voxelFilter.sharedMesh = VoxelMesh.Build(data.GetData(), data.UnitLength, false);
-			data.Dispose();
-
+            spaceColonizer.setupVoxelize();
             Debug.Log("Finished Voxelation");
         }
         GUILayout.FlexibleSpace();

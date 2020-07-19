@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using VoxelSystem;
 
 public class SpaceColonization : MonoBehaviour {
     private Tree tree;
@@ -96,9 +97,10 @@ public class SpaceColonization : MonoBehaviour {
         isGenerating = true;
     }
 
-    public void clear() {
-        cleanUp();
-        cleanUpVoxel();
+    public void setScale() {
+        treeObject.transform.localScale = SCData.scaleFactor * Vector3.one;
+        treeObject.transform.position *= SCData.scaleFactor;
+        treeLeaves.transform.localScale = SCData.scaleFactor * Vector3.one;
     }
 
     public void save() {
@@ -111,6 +113,11 @@ public class SpaceColonization : MonoBehaviour {
         saveHelper.saveMeshToDir(saveName, treeObject, voxelTree, treeLeaves);
         saveHelper.saveMatToDir(saveName, treeObject, voxelTree, treeLeaves);
         saveHelper.savePrefabToDir(saveName, treeObject, voxelTree, treeLeaves);
+    }
+
+    public void clear() {
+        cleanUp();
+        cleanUpVoxel();
     }
 
     private void cleanUp() {
@@ -153,7 +160,7 @@ public class SpaceColonization : MonoBehaviour {
         }
     }
 
-    public MeshFilter setupVoxelize() {
+    public void setupVoxelize() {
         cleanUpVoxel();
 
         treeObject.SetActive(false);
@@ -168,13 +175,13 @@ public class SpaceColonization : MonoBehaviour {
         MeshFilter filter = voxelTree.AddComponent<MeshFilter>();
         filter.mesh = new Mesh();
 
-        return filter;
-    }
-
-    public void setScale() {
-        treeObject.transform.localScale = SCData.scaleFactor * Vector3.one;
-        treeObject.transform.position *= SCData.scaleFactor;
-        treeLeaves.transform.localScale = SCData.scaleFactor * Vector3.one;
+        var data = GPUVoxelizer.Voxelize(
+               voxelizer,
+               treeObject.GetComponent<MeshFilter>().mesh,
+               SCData.resolution,
+               true);
+        filter.sharedMesh = VoxelMesh.Build(data.GetData(), data.UnitLength, false);
+        data.Dispose();
     }
 
     void OnDrawGizmosSelected() {
