@@ -261,4 +261,13 @@ public class SpaceColonization : MonoBehaviour {
         treeObject.transform.position *= SCData.scaleFactor;
         treeLeaves.transform.localScale = SCData.scaleFactor * Vector3.one;
     }
+
+    void OnDrawGizmosSelected() {
+        Gizmos.color = new Color(0, 0, 0.75f, 0.5f);
+        if (SCData.leafRefShape == SpaceColonizationScriptableObject.LeafRefShape.Sphere) {
+            Gizmos.DrawSphere(SCData.leafRefOffset, SCData.leafRefSpawnSize);
+        } else {
+            Gizmos.DrawCube(Vector3.zero, Vector3.one * SCData.leafRefSpawnSize * 2);
+        }
+    }
 }
