@@ -28,13 +28,17 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
 
     [Header("Space Colonization Attributes")]
     public Vector3 rootPos = new Vector3(0, -200, 0);
-    public int numLeafRef = 500;
-    public float leafRefSpawnSize = 200;
-    public Vector3 leafRefOffset = Vector3.zero;
-    public Mesh leafRefShapeMesh;
-    public bool isConvexMesh = false;
     [Tooltip("Min and Max distance to check for node when spawning branches")]
     public Vector2 branchDist = new Vector2(10f, 100f);
+    [Tooltip("Influences number of possible branches")]
+    public int numLeafRef = 500;
+    [Tooltip("Radius of leaf range")]
+    public float leafRefSpawnSize = 200;
+    public Vector3 leafRefOffset = Vector3.zero;
+    [Tooltip("Custom shape for leaves to spawn in")]
+    public Mesh leafRefShapeMesh;
+    [Tooltip("Simple shape or not")]
+    public bool isConvexMesh = false;
     [Tooltip("Amount of time before algorithm stops spawning")]
     public float maxTimeoutTime = 1;
 
@@ -44,7 +48,7 @@ public class SpaceColonizationScriptableObject : ScriptableObject {
     [Tooltip("Thickness factor of branches")]
     public float invertedGrowth = 1.5f;
     [Range(1, 10)]
-    [Tooltip("Number of divisions per ring of branch")]
+    [Tooltip("Number of points per ring of branch")]
     public int radialSubdivisions = 10;
 
     [Header("Voxelization")]
